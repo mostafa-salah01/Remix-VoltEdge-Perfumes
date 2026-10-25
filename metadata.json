@@ -1,6 +1,7 @@
 {
-  "name": "VoltEdge Perfumes - متجر فولت إيدج للعطور الفاخرة",
-  "description": "متجر VoltEdge للعطور الفاخرة والبخور والعود الملكي - رحلة عطرية تجسد الفخامة والأناقة المطلقة.",
+  "name": "SAMOU ROYALE - دار سَمْو للعطور الملكية الفاخرة",
+  "description": "متجر دار سَمْو الملكية (SAMOU ROYALE) للعطور الفاخرة، دهن العود المعتق، والبخور الملكي بالمملكة العربية السعودية.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
+

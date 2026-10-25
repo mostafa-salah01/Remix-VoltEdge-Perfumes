@@ -3,8 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SAMOU ROYALE | دار العطور الملكية الفاخرة</title>
-  <meta name="description" content="متجر SAMOU ROYALE للعطور الفاخرة والبخور والعود الملكي - رحلة عطرية تجسد الفخامة والأناقة المطلقة.">
+  <title>SAMOU ROYALE | دار سَمْو للعطور الملكية الفاخرة - المملكة العربية السعودية</title>
+  <meta name="description" content="متجر دار سَمْو الملكية (SAMOU ROYALE) للعطور الفاخرة، دهن العود المعتق، والبخور الملكي بالمملكة العربية السعودية. شحن فوري ومجاني لكافة مدن ومحافظات المملكة.">
+  <meta property="og:title" content="SAMOU ROYALE | دار سَمْو للعطور الملكية الفاخرة - المملكة العربية السعودية">
+  <meta property="og:description" content="متجر دار سَمْو الملكية (SAMOU ROYALE) للعطور الفاخرة، دهن العود المعتق، والبخور الملكي بالمملكة العربية السعودية. شحن فوري ومجاني لكافة مدن ومحافظات المملكة.">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -248,6 +250,25 @@
   <!-- الكانفاس التفاعلي للمؤثرات الذهبية الفاخرة (محسن بالكامل للموبايل والديسكتوب) -->
   <canvas id="luxuryCanvas" class="fixed inset-0 pointer-events-none z-10 w-full h-full"></canvas>
 
+  <!-- 0. شريط العرض الملكي لعملاء المملكة العربية السعودية (يختفي نهائياً فور تفعيل كود الخصم) -->
+  <div id="topSaudiPromoBar" class="relative z-50 bg-gradient-to-r from-[#071410] via-[#0E2820] to-[#071410] text-brand-gold border-b border-brand-gold/30 text-xs py-2 px-4 transition-all duration-300">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-3">
+      <div class="flex items-center justify-center gap-2 sm:gap-3 flex-1 text-center font-bold">
+        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-brand-gold text-brand-dark text-[11px] font-black">
+          🇸🇦 عرض المملكة
+        </span>
+        <span class="text-white text-xs sm:text-sm font-tajawal">
+          خصم 25% حصري لعملاء السعودية مع كود <span class="text-brand-gold font-mono font-extrabold underline tracking-wider cursor-pointer" onclick="claimSaudiDiscountAndNavigate()">KSA25</span> + شحن مجاني وسريع لكافة المدن
+        </span>
+        <button onclick="claimSaudiDiscountAndNavigate()" class="hidden sm:inline-flex items-center gap-1 px-3 py-1 bg-brand-gold hover:bg-brand-goldHover text-brand-dark font-cairo font-extrabold text-[11px] rounded-lg shadow transition-all active:scale-95">
+          <span>تفعيل 25% والتسوق</span>
+          <span>←</span>
+        </button>
+      </div>
+      <button onclick="dismissTopPromoBarPermanently()" class="text-white/60 hover:text-white text-xs p-1 rounded-full transition-colors" title="إغلاق هذا الشريط">✕</button>
+    </div>
+  </div>
+
   <!-- 1. شريط التنقل العلوي الثابت (Sticky Navbar) -->
   <header class="sticky top-0 z-50 bg-[#F4F8F5]/90 backdrop-blur-md border-b border-[#0A1B16]/10 transition-all duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
@@ -341,23 +362,23 @@
 
       <div class="flex items-center gap-2 mb-2">
         <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-brand-gold text-brand-dark text-sm font-bold pulse-gold-ring">
-          🔥
+          🇸🇦
         </span>
         <div>
-          <span class="text-[11px] font-bold text-brand-gold uppercase tracking-wider">عرض جانبي حصري</span>
+          <span class="text-[11px] font-bold text-brand-gold uppercase tracking-wider">عرض خاص بالمملكة</span>
           <h4 class="font-cairo font-extrabold text-sm sm:text-base text-white">خصم ملكي 25% فوري!</h4>
         </div>
       </div>
 
       <p class="text-xs text-white/80 font-tajawal mb-3 leading-relaxed">
-        استمتع بتخفيض 25% مع شحن ملكي مجاني مؤمن لكافة المحافظات عند استخدام الكود:
+        استمتع بتخفيض 25% مع شحن ملكي سريع ومجاني لكافة مدن المملكة عند استخدام الكود:
       </p>
 
       <!-- كود الكوبون والعداد -->
       <div class="bg-black/40 border border-brand-gold/30 rounded-xl p-2.5 mb-3 flex items-center justify-between">
         <div class="text-right">
-          <span class="text-[10px] text-white/60 block">كوبون الخصم:</span>
-          <span id="sideCouponCode" class="font-cairo font-extrabold text-brand-gold tracking-widest text-sm">ROYAL25</span>
+          <span class="text-[10px] text-white/60 block">كود الخصم الحصري:</span>
+          <span id="sideCouponCode" class="font-cairo font-extrabold text-brand-gold tracking-widest text-base font-mono">KSA25</span>
         </div>
         <button 
           onclick="copySideCoupon()" 
@@ -375,10 +396,10 @@
 
       <div class="flex gap-2">
         <button 
-          onclick="applySideDiscountToCart()" 
-          class="flex-1 py-2 bg-gradient-to-r from-brand-gold to-amber-500 hover:brightness-110 text-brand-dark font-cairo font-extrabold text-xs rounded-xl shadow-md transition-all active:scale-95"
+          onclick="claimSaudiDiscountAndNavigate()" 
+          class="flex-1 py-2.5 bg-gradient-to-r from-brand-gold to-amber-500 hover:brightness-110 text-brand-dark font-cairo font-extrabold text-xs rounded-xl shadow-md transition-all active:scale-95 flex items-center justify-center gap-1.5"
         >
-          تطبيق الخصم بالسلة فوراً ✨
+          <span>تطبيق 25% والانتقال للعروض ✨</span>
         </button>
       </div>
     </div>
@@ -391,22 +412,98 @@
     class="fixed bottom-20 left-4 z-40 bg-brand-dark/95 text-brand-gold hover:text-white border border-brand-gold/60 px-3.5 py-2 rounded-full shadow-2xl flex items-center gap-2 text-xs font-cairo font-bold backdrop-blur-md transition-all hover:scale-105 active:scale-95 group"
   >
     <span class="w-2.5 h-2.5 rounded-full bg-brand-gold animate-ping"></span>
-    <span>🔥 عرض 25% خاطف</span>
+    <span>🔥 عرض 25% للمملكة</span>
     <span class="text-[10px] text-white/70 font-mono hidden sm:inline" id="pillCountdown">14:59</span>
   </button>
 
   <!-- ═════════════════ إشعار الشراء الحي ينبثق من الجنب (Live Order Toast) ═════════════════ -->
-  <div id="liveOrderToast" class="fixed bottom-6 left-4 z-40 bg-[#0C201A]/95 text-white p-3 sm:p-3.5 rounded-2xl shadow-2xl border border-brand-gold/40 flex items-center gap-3 transform -translate-x-[120%] transition-transform duration-500 ease-out pointer-events-none max-w-sm">
-    <div class="w-10 h-10 rounded-xl bg-brand-gold/20 border border-brand-gold/40 flex items-center justify-center text-lg shrink-0">
-      👑
-    </div>
-    <div class="text-right min-w-0">
-      <div class="flex items-center gap-1.5">
-        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-        <span class="text-[10px] text-white/60 font-tajawal" id="liveOrderTime">الآن</span>
+  <div id="liveOrderToast" class="fixed bottom-6 left-4 z-40 bg-[#0C201A]/95 text-white p-3 sm:p-3.5 rounded-2xl shadow-2xl border border-brand-gold/40 flex items-center justify-between gap-3 transform -translate-x-[120%] transition-transform duration-500 ease-out pointer-events-auto max-w-sm">
+    <div class="flex items-center gap-3 min-w-0">
+      <div class="w-10 h-10 rounded-xl bg-brand-gold/20 border border-brand-gold/40 flex items-center justify-center text-lg shrink-0">
+        👑
       </div>
-      <p class="text-xs font-bold text-white font-cairo truncate" id="liveOrderBuyer">اشترى للتو محمد من الرياض</p>
-      <p class="text-[11px] text-brand-gold font-tajawal truncate" id="liveOrderProduct">عطر 'كهرُمان' الملكي</p>
+      <div class="text-right min-w-0">
+        <div class="flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span class="text-[10px] text-white/60 font-tajawal" id="liveOrderTime">الآن</span>
+        </div>
+        <p class="text-xs font-bold text-white font-cairo truncate" id="liveOrderBuyer">اشترى للتو محمد من الرياض</p>
+        <p class="text-[11px] text-brand-gold font-tajawal truncate" id="liveOrderProduct">عطر 'كهرُمان' الملكي</p>
+      </div>
+    </div>
+    <button onclick="dismissLiveOrdersPermanently()" class="text-white/40 hover:text-white p-1 rounded-full text-xs shrink-0 transition-colors" title="إخفاء هذه التنبيهات نهائياً">✕</button>
+  </div>
+
+  <!-- ═════════════════ نافذة كود الخصم الذكية المنبثقة لعملاء السعودية (Smart Saudi Discount Popup) ═════════════════ -->
+  <div id="saudiDiscountModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-500">
+    <div class="relative bg-gradient-to-br from-[#0B1E18] via-[#091813] to-[#06100D] border-2 border-brand-gold/60 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-[0_0_50px_rgba(229,168,85,0.45)] text-center text-white transform scale-95 transition-transform duration-500 overflow-hidden">
+      <!-- هالات خلفية ناعمة -->
+      <div class="ambient-orb w-64 h-64 bg-brand-gold/20 -top-12 -right-12"></div>
+      <div class="ambient-orb w-64 h-64 bg-emerald-700/15 -bottom-12 -left-12"></div>
+
+      <!-- زر الإغلاق الدائم (✕) -->
+      <button onclick="dismissSaudiDiscountModal()" class="absolute top-4 left-4 w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center text-sm font-bold transition-colors z-20" title="إغلاق التنبيه نهائياً">
+        ✕
+      </button>
+
+      <div class="relative z-10 space-y-4">
+        <!-- شارة الترحيب السعودية -->
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-brand-gold/20 border border-brand-gold/50 text-xs font-bold text-brand-gold font-cairo shadow-inner">
+          <span>🇸🇦</span>
+          <span>يا هلا بك في دار سَمْو للعطور الملكية بالمملكة</span>
+        </div>
+
+        <div class="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-brand-gold to-amber-600 text-brand-dark flex items-center justify-center text-3xl font-extrabold shadow-xl pulse-gold-ring">
+          👑
+        </div>
+
+        <h3 class="font-cairo text-2xl sm:text-3xl font-extrabold text-white text-glow leading-snug">
+          هدية الترحيب الملكية: <br>
+          <span class="text-brand-gold">خصم 25% فوري</span> على كامل مقتنياتك
+        </h3>
+
+        <p class="text-xs sm:text-sm text-white/85 font-tajawal leading-relaxed max-w-md mx-auto">
+          تقديراً لزيارتكم الكريمة لدار سَمْو بالمملكة، نقدم لكم كود الخصم الحصري لعملاء السعودية مع شحن مجاني وسريع لكافة المدن (الرياض، جدة، الشرقية، مكة، المدينة وكافة المحافظات).
+        </p>
+
+        <!-- كود الكوبون مع زر النسخ والتفعيل -->
+        <div class="bg-black/50 border border-brand-gold/40 rounded-2xl p-3.5 flex items-center justify-between gap-3 shadow-inner">
+          <div class="text-right">
+            <span class="text-[10px] text-white/60 block font-tajawal">كود الخصم الحصري لعملاء المملكة:</span>
+            <span class="font-cairo font-extrabold text-brand-gold text-xl tracking-widest font-mono">KSA25</span>
+          </div>
+          <div class="text-left text-xs text-emerald-400 font-bold bg-emerald-950/60 border border-emerald-500/30 px-3 py-1.5 rounded-lg flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>خصم 25% مفعّل</span>
+          </div>
+        </div>
+
+        <!-- زر التفعيل والتوجيه للعروض الحصرية المخصومة -->
+        <div class="pt-2 space-y-2.5">
+          <button 
+            onclick="claimSaudiDiscountAndNavigate()" 
+            class="w-full py-4 rounded-xl bg-gradient-to-r from-brand-gold via-amber-400 to-brand-gold hover:brightness-110 text-brand-dark font-cairo font-extrabold text-sm sm:text-base shadow-2xl transition-all transform active:scale-95 flex items-center justify-center gap-2 group"
+          >
+            <span>✨ تفعيل الخصم الآن وتصفح العروض الحصرية</span>
+            <span class="group-hover:-translate-x-1 transition-transform">←</span>
+          </button>
+
+          <button 
+            onclick="dismissSaudiDiscountModal()" 
+            class="text-xs text-white/50 hover:text-white/80 underline font-tajawal transition-colors"
+          >
+            لا أرغب بالاستفادة من الخصم الآن وإغلاق هذه النافذة نهائياً
+          </button>
+        </div>
+
+        <div class="flex items-center justify-center gap-3 text-[11px] text-white/60 pt-1">
+          <span>✓ شحن مجاني لكافة مدن المملكة</span>
+          <span>•</span>
+          <span>✓ ضمان ذهبي للاسترجاع</span>
+          <span>•</span>
+          <span>✓ مدى و STC Pay والدفع عند الاستلام</span>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -485,42 +582,49 @@
 
   <!-- سكربت التطبيق الكامل: إدارة الصفحات، السلة، التفاعل -->
   <script>
-    // ═════════════════ قاعدة بيانات المنتجات (الصور الخمسة المعتمدة فقط) ═════════════════
+    // ═════════════════ قاعدة بيانات المنتجات (الصور الخمسة المعتمدة فقط مع تخصيص المملكة العربية السعودية) ═════════════════
     const PRODUCTS = {
       bestSellers: [
-        { id: 1, name: "عطر 'كهرُمان' الملكي", price: 499, rating: 5.0, image: "images/prod-1.jfif", note: "عنبر بلوري نادر ومسك أبيض" },
-        { id: 2, name: "كسرات عود فاخرة", price: 750, rating: 5.0, image: "images/prod-2.jfif", note: "عود موروكي سوبر طبيعي غني بالدهن" },
-        { id: 3, name: "عطر 'شرقي' للجنسين", price: 389, rating: 5.0, image: "images/prod-3.jfif", note: "خشب الأرز والهيل والزعفران" },
-        { id: 4, name: "مبخرة عصريّة مع بخور", price: 599, rating: 4.6, image: "images/prod-4.jfif", note: "تصميم معماري ذهبي وفحم عالي النقاء" },
+        { id: 1, name: "عطر 'كهرُمان' الملكي", price: 499, originalPrice: 665, rating: 5.0, image: "images/prod-1.jfif", note: "عنبر بلوري نادر ومسك أبيض نقي", demandBadge: "👑 الأكثر طلباً في المملكة", stockAlert: "متبقي 4 حبات فقط", salesCount: "1,840 طلب هذا الأسبوع بالمملكة" },
+        { id: 2, name: "مخلط العرين الملكي", price: 510, originalPrice: 680, rating: 5.0, image: "images/prod-3.jfif", note: "دهن عود سيوفي معتق، ورد طائفي وعنبر كشميري", demandBadge: "🔥 طلب قياسي في الرياض وجدة", stockAlert: "متبقي قطعتان فقط بالمستودع", salesCount: "عرض حصري 25% خصم" },
+        { id: 3, name: "كسرات عود موروكي نخب أول", price: 750, originalPrice: 990, rating: 5.0, image: "images/prod-2.jfif", note: "أوقية عود موروكي سوبر طبيعي يزبد بالدهن الكثيف", demandBadge: "💎 نخب أول معتمد SFDA", stockAlert: "منافسة شديدة على الكمية", salesCount: "خيار المجالس والضيافة السعودية" },
+        { id: 4, name: "سكب الورد الطائفي الفاخر", price: 420, originalPrice: 560, rating: 5.0, image: "images/prod-4.jfif", note: "قطفة أولى من مزارع الهدا والشفا بالطائف", demandBadge: "🌸 عرائسي ملكي", stockAlert: "متبقي 3 حبات فقط", salesCount: "خصم 25% حصري لعملاء السعودية" },
+      ],
+      discountedOffers: [
+        { id: 2, name: "مخلط العرين الملكي", price: 510, originalPrice: 680, rating: 5.0, image: "images/prod-3.jfif", note: "دهن عود سيوفي معتق، ورد طائفي وعنبر كشميري", demandBadge: "🔥 خصم 25% حصري", stockAlert: "متبقي قطعتان فقط", salesCount: "طلب قياسي في الرياض وجدة" },
+        { id: 101, name: "نجد ليذر النسخة الخاصة", price: 465, originalPrice: 620, rating: 5.0, image: "images/prod-3.jfif", category: "woody", note: "جلود فاخرة وزعفران أصفر ولبان ظفاري معتق", demandBadge: "⚡ توقيع نجدي فاخر", stockAlert: "متبقي 3 حبات بالمستودع", salesCount: "الأكثر طلباً للثوب والبشت" },
+        { id: 4, name: "سكب الورد الطائفي الفاخر", price: 420, originalPrice: 560, rating: 5.0, image: "images/prod-4.jfif", category: "floral", note: "قطفة أولى من مزارع الهدا والشفا مع عنبر نقي", demandBadge: "🌸 عرائسي ملكي 25%-", stockAlert: "متبقي 3 فقط", salesCount: "مناسبات وأفراح المملكة" },
+        { id: 301, name: "دهن عود تراد معتق 25 سنة", price: 735, originalPrice: 980, rating: 5.0, image: "images/prod-1.jfif", note: "تولة دهن عود تراد جبلي نادر معتق ربع قرن", demandBadge: "👑 نفائس التعتيق السلطاني", stockAlert: "متبقي تولة واحدة فقط", salesCount: "إصدار شيوخ ومناسبات كبرى" },
       ],
       men: [
-        { id: 101, name: "عطر سيفرين إمبيريال", price: 549, rating: 5.0, image: "images/prod-3.jfif", category: "woody", note: "أخشاب الغاياك وفيتيفر مدخن" },
-        { id: 102, name: "كهرُمان نوار الملكي", price: 620, rating: 4.9, image: "images/prod-1.jfif", category: "oriental", note: "عنبر داكن وتبغ كوبي معتق" },
-        { id: 103, name: "إميرالد ليدر الفاخر", price: 480, rating: 5.0, image: "images/prod-3.jfif", category: "woody", note: "جلود إيطالية وهيل غواتيمالي" },
-        { id: 104, name: "فانتوم وودز المركز", price: 425, rating: 4.8, image: "images/prod-1.jfif", category: "fresh", note: "صندل استوائي وليمون سرديني" },
-        { id: 105, name: "عود كراون برايفيه", price: 790, rating: 5.0, image: "images/prod-2.jfif", category: "oriental", note: "كسرات دهن عود قديم" },
-        { id: 106, name: "سلطان العود الأزرق", price: 699, rating: 4.9, image: "images/prod-4.jfif", category: "oriental", note: "بخور ملوكي ولبان حوجري" },
+        { id: 101, name: "نجد ليذر النسخة الخاصة", price: 465, originalPrice: 620, rating: 5.0, image: "images/prod-3.jfif", category: "woody", note: "جلود فاخرة وزعفران أصفر ولبان ظفاري معتق", demandBadge: "🔥 طلب استثنائي في الرياض", stockAlert: "متبقي 3 فقط", salesCount: "خصم 25% حصري" },
+        { id: 102, name: "عطر سيفرين إمبيريال", price: 549, rating: 5.0, image: "images/prod-3.jfif", category: "woody", note: "أخشاب الغاياك وفيتيفر مدخن للبشت الملكي", demandBadge: "👑 فخامة المجالس", stockAlert: "طلب قياسي" },
+        { id: 103, name: "كهرُمان نوار الملكي", price: 620, rating: 4.9, image: "images/prod-1.jfif", category: "oriental", note: "عنبر داكن وتبغ كوبي معتق وثبات 48 ساعة على الثوب", demandBadge: "⚡ ثبات استثنائي" },
+        { id: 104, name: "إميرالد ليدر الفاخر", price: 480, rating: 5.0, image: "images/prod-3.jfif", category: "woody", note: "جلود إيطالية وهيل غواتيمالي أخضر" },
+        { id: 105, name: "فانتوم وودز المركز", price: 425, rating: 4.8, image: "images/prod-1.jfif", category: "fresh", note: "صندل استوائي وليمون سرديني بارد للمجالس" },
+        { id: 106, name: "سلطان العود الأزرق", price: 699, rating: 4.9, image: "images/prod-4.jfif", category: "oriental", note: "بخور ملوكي ولبان حوجري عماني نادر", demandBadge: "💎 إصدار خاص" },
       ],
       women: [
-        { id: 201, name: "عطر روز نوبل المخملي", price: 460, rating: 5.0, image: "images/prod-1.jfif", category: "floral", note: "ورد جوري دمشقي مع كمثرى فرنسية" },
-        { id: 202, name: "فيلفيت أوركيد الملكي", price: 520, rating: 4.9, image: "images/prod-3.jfif", category: "vanilla", note: "أوركيد أسود وعسل بري دافئ" },
-        { id: 203, name: "فانيلا دي لوميير", price: 390, rating: 5.0, image: "images/prod-1.jfif", category: "vanilla", note: "فانيليا بوربونية مكرملة" },
-        { id: 204, name: "بلانش مسك النقي", price: 440, rating: 4.9, image: "images/prod-3.jfif", category: "musk", note: "أزهار القطن ومسك أبيض نقي" },
-        { id: 205, name: "توليب رويال الفواح", price: 495, rating: 5.0, image: "images/prod-4.jfif", category: "floral", note: "أزهار التوليب وتوت بري حلو" },
-        { id: 206, name: "رين دي سيلين الخاصة", price: 680, rating: 5.0, image: "images/prod-2.jfif", category: "musk", note: "بخور زهري فاخر مع مسك غزال" },
+        { id: 201, name: "سكب الورد الطائفي الفاخر", price: 420, originalPrice: 560, rating: 5.0, image: "images/prod-4.jfif", category: "floral", note: "ورد طائفي أصيل من مزارع الطائف مع عنبر أبيض نقي", demandBadge: "🌸 الأكثر طلباً في المناسبات", stockAlert: "متبقي 2 بالمستودع", salesCount: "خصم 25% حصري" },
+        { id: 202, name: "عطر روز نوبل المخملي", price: 460, rating: 5.0, image: "images/prod-1.jfif", category: "floral", note: "ورد جوري دمشقي مع كمثرى فرنسية وبودرة المسك", demandBadge: "👑 رقة ملكية" },
+        { id: 203, name: "فيلفيت أوركيد الملكي", price: 520, rating: 4.9, image: "images/prod-3.jfif", category: "vanilla", note: "أوركيد أسود وعسل جبلي نقي دافئ" },
+        { id: 204, name: "بلانش مسك النقي", price: 440, rating: 4.9, image: "images/prod-3.jfif", category: "musk", note: "أزهار القطن ومسك أبيض نقي للمجالس والزيارات", demandBadge: "⚡ فوحان بارد يدوم" },
+        { id: 205, name: "فانيلا دي لوميير", price: 390, rating: 5.0, image: "images/prod-1.jfif", category: "vanilla", note: "فانيليا بوربونية مكرملة وزهور البرتقال" },
+        { id: 206, name: "رين دي سيلين الخاصة", price: 680, rating: 5.0, image: "images/prod-2.jfif", category: "musk", note: "بخور زهري فاخر مع مسك غزال أصلاني", demandBadge: "💎 نيش نسائي نادر" },
       ],
       oud: [
-        { id: 301, name: "كسرات عود موروكي نخب أول", price: 750, rating: 5.0, image: "images/prod-2.jfif", note: "أوقية عود موروكي غني بالدهن الكثيف" },
-        { id: 302, name: "تولة دهن عود هندي قديم", price: 890, rating: 5.0, image: "images/prod-1.jfif", note: "معتق 15 سنة برائحة سويتية عميقة" },
-        { id: 303, name: "مبخرة عصرية بهيكل هندسي", price: 599, rating: 4.6, image: "images/prod-4.jfif", note: "مبخرة وموزع عيدان برائحة تدوم" },
-        { id: 304, name: "المبخرة الذكية المحمولة", price: 680, rating: 4.9, image: "images/prod-4.jfif", note: "تسخين سيراميكي فوري بدون فحم" },
-        { id: 305, name: "صندوق عود كلمنتان مالينو", price: 820, rating: 5.0, image: "images/prod-2.jfif", note: "رائحة باردة فواحة للمجالس الراقية" },
-        { id: 306, name: "رقائق عود تراد الحريري", price: 640, rating: 4.8, image: "images/prod-3.jfif", note: "خشب طبيعي مستخلص يدويًا" },
+        { id: 301, name: "دهن عود تراد معتق 25 سنة", price: 735, originalPrice: 980, rating: 5.0, image: "images/prod-1.jfif", note: "تولة دهن عود تراد جبلي نادر معتق ربع قرن برائحة بخورية زعفرانية", demandBadge: "👑 نفائس التعتيق السلطاني", stockAlert: "متبقي تولة واحدة فقط", salesCount: "خصم 25% حصري" },
+        { id: 302, name: "بخور كلمنتان ملكي دبل سوبر بيور", price: 630, originalPrice: 840, rating: 5.0, image: "images/prod-2.jfif", note: "أوقية عود كلمنتان كرات مذهبة تغلي بالدهن لتعطير المجالس السعودية", demandBadge: "🔥 طلب استثنائي للضيافة", stockAlert: "متبقي 4 أواقٍ", salesCount: "خصم 25% حصري" },
+        { id: 303, name: "كسرات عود موروكي نخب أول", price: 750, rating: 5.0, image: "images/prod-2.jfif", note: "أوقية عود موروكي غني بالدهن الكثيف يزبد على الجمر", demandBadge: "💎 زبد كثيف طبيعي 100%" },
+        { id: 304, name: "تولة دهن عود هندي قديم", price: 890, rating: 5.0, image: "images/prod-1.jfif", note: "معتق 15 سنة برائحة سويتية عميقة لا تزول من الشماغ" },
+        { id: 305, name: "المبخرة الذكية المحمولة للسيارة والمجلس", price: 680, rating: 4.9, image: "images/prod-4.jfif", note: "تسخين سيراميكي فوري ذكي بدون فحم ومناسبة للتنقل بين المدن" },
+        { id: 306, name: "صندوق عود كلمنتان مالينو", price: 820, rating: 5.0, image: "images/prod-2.jfif", note: "رائحة باردة سويتية فواحة للمجالس الملكية" },
       ],
       exclusive: [
-        { id: 401, name: "صندوق النخبة الملكي (Grand Coffret)", price: 1450, image: "images/hero-banner.jfif", badge: "إصدار مرقم", desc: "عطر كهرُمان + تولة دهن عود + أوقية موروكي في صندوق خشبي مطعم بالنحاس" },
-        { id: 402, name: "ثلاثية نوكتورن الذهبية (Trio)", price: 1150, image: "images/prod-3.jfif", badge: "مجموعة 3 قوارير", desc: "3 زجاجات سعة 50 مل تجمع بين العنبر، الزهور والجلود لكل أوقات اليوم" },
-        { id: 403, name: "طقم الضيافة والبخور الملكي", price: 920, image: "images/prod-4.jfif", badge: "طقم الضيافة", desc: "مبخرة هندسية بتشطيب ذهبي + عبوتان من رقائق العود وملقط مذهب فاخر" },
+        { id: 401, name: "صندوق فخر المملكة للمناسبات", price: 1290, originalPrice: 1720, image: "images/hero-banner.jfif", badge: "إصدار يوم التأسيس 🇸🇦", desc: "صندوق فاخر مطعم بالذهب: عطر العرين الملكي + ربع تولة دهن عود تراد 25 سنة + أوقية كلمنتان بيور ومبخرة رخامية", demandBadge: "👑 خصم 25% حصري لفترة محدودة", stockAlert: "متبقي 3 صناديق مرقمة فقط" },
+        { id: 402, name: "صندوق النخبة الملكي (Grand Coffret)", price: 1450, image: "images/hero-banner.jfif", badge: "إصدار مرقم", desc: "عطر كهرُمان + تولة دهن عود + أوقية موروكي في صندوق خشبي مطعم بالنحاس", demandBadge: "🔥 إصدار VIP" },
+        { id: 403, name: "ثلاثية نوكتورن الذهبية (Trio)", price: 1150, image: "images/prod-3.jfif", badge: "مجموعة 3 قوارير", desc: "3 زجاجات سعة 50 مل تجمع بين العنبر، الزهور والجلود لكل أوقات اليوم", demandBadge: "⚡ الأكثر طلباً للإهداء" },
+        { id: 404, name: "طقم الضيافة والبخور الملكي", price: 920, image: "images/prod-4.jfif", badge: "طقم الضيافة السعودية", desc: "مبخرة هندسية بتشطيب ذهبي + عبوتان من رقائق العود وملقط مذهب فاخر", demandBadge: "💎 خيار المجالس السعودية" },
       ]
     };
 
@@ -582,7 +686,7 @@
       }, 2600);
     }
 
-    // ═════════════════ توليد كرت المنتج (القاعدة: الكرت كله صورة والنص فوقها مع 3D Tilt ودخول تفاعلي) ═════════════════
+    // ═════════════════ توليد كرت المنتج (القاعدة: الكرت كله صورة والنص فوقها مع 3D Tilt ودخول تفاعلي وشارات نفسية) ═════════════════
     function renderProductCard(p, index = 0) {
       const dirClass = (index % 2 === 0) ? 'reveal-init-right' : 'reveal-init-left';
       const delayClass = `stagger-${(index % 4) + 1}`;
@@ -604,22 +708,55 @@
             <!-- طبقة تدرج لضمان وضوح النصوص -->
             <div class="absolute inset-0 bg-gradient-to-t from-[#091813]/95 via-[#091813]/45 to-transparent"></div>
 
-            <!-- شارة التقييم أعلى الكرت مع تفاعل حركي ممتع -->
-            <div class="absolute top-3.5 right-3.5 z-10 bg-[#0C201A]/80 backdrop-blur-md px-2.5 py-1 rounded-full text-xs font-bold text-amber-400 flex items-center gap-1 border border-white/10 group-hover:border-brand-gold/60 transition-colors">
+            <!-- شارة التقييم أعلى اليمين -->
+            <div class="absolute top-3.5 right-3.5 z-10 bg-[#0C201A]/85 backdrop-blur-md px-2.5 py-1 rounded-full text-xs font-bold text-amber-400 flex items-center gap-1 border border-white/10 group-hover:border-brand-gold/60 transition-colors shadow">
               <span class="inline-block group-hover:rotate-12 transition-transform">★</span>
               <span class="text-white">${p.rating.toFixed(1)}</span>
+              <span class="text-[10px] text-white/60 hidden sm:inline">(تقييم سعودي)</span>
             </div>
+
+            <!-- شارة الحصرية أو الطلب العالي والمنافسة أعلى اليسار -->
+            ${p.demandBadge ? `
+              <div class="absolute top-3.5 left-3.5 z-10 bg-gradient-to-r from-red-600/90 to-amber-600/90 text-white backdrop-blur-md px-2.5 py-1 rounded-full text-[10px] sm:text-[11px] font-bold font-cairo shadow-lg flex items-center gap-1 border border-white/20 animate-pulse">
+                <span>${p.demandBadge}</span>
+              </div>
+            ` : ''}
 
             <!-- المحتوى النصي فوق الصورة في الأسفل -->
             <div class="absolute inset-x-0 bottom-0 p-5 z-10 flex flex-col justify-end text-right">
+              
+              <!-- تنبيه المخزون أو الطلب القياسي -->
+              ${p.stockAlert ? `
+                <div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-amber-500/25 text-amber-300 border border-amber-500/40 text-[10px] font-bold mb-1.5 w-fit">
+                  <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span>
+                  <span>${p.stockAlert}</span>
+                </div>
+              ` : ''}
+
               <h3 class="font-cairo text-lg font-bold text-white text-glow mb-1 group-hover:text-brand-gold transition-colors">
                 ${p.name}
               </h3>
+
+              ${p.salesCount ? `
+                <div class="text-[10px] text-white/75 font-tajawal mb-1">
+                  🔥 ${p.salesCount}
+                </div>
+              ` : ''}
+
               ${p.note ? `<p class="text-xs text-white/70 font-tajawal mb-3 line-clamp-1">${p.note}</p>` : ''}
               
               <div class="flex items-center justify-between pt-2 border-t border-white/15">
                 <div class="text-white font-cairo font-extrabold text-base sm:text-lg">
-                  <span>${p.price}</span> <span class="text-xs font-normal text-brand-gold">ر.س</span>
+                  ${p.originalPrice ? `
+                    <div class="flex items-baseline gap-1.5">
+                      <span class="text-xs text-white/50 line-through font-normal">${p.originalPrice} ر.س</span>
+                      <span class="text-brand-gold font-black">${p.price}</span>
+                      <span class="text-xs font-normal text-brand-gold">ر.س</span>
+                      <span class="bg-red-600/90 text-white text-[9px] font-black px-1.5 py-0.2 rounded shadow">25%-</span>
+                    </div>
+                  ` : `
+                    <span>${p.price}</span> <span class="text-xs font-normal text-brand-gold">ر.س</span>
+                  `}
                 </div>
                 <button 
                   onclick="addToCart(${p.id}, '${p.name.replace(/'/g, "\\'")}', ${p.price}, '${p.image}')"
@@ -659,41 +796,74 @@
               
               <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-bold text-brand-gold shadow-lg">
                 <span class="w-2 h-2 rounded-full bg-brand-gold animate-pulse"></span>
-                <span id="typewriterSlogan">رحلة عطريّة: اكتشف الفخامة المطلقة</span>
+                <span id="typewriterSlogan">يا هلا بك في دار سَمْو: فخامة تليق بالمملكة العربية السعودية</span>
                 <span class="typewriter-cursor"></span>
               </div>
 
               <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold font-cairo text-white leading-[1.2] text-glow reveal-init-right">
-                رحلة عطريّة: <br>
-                <span class="text-brand-gold">اكتشف الفخامة المطلقة</span>
+                أصالة الملوك: <br>
+                <span class="text-brand-gold">عطور تليق بالمجالس والمناسبات السعودية</span>
               </h1>
 
               <p class="text-base sm:text-lg text-white/90 font-tajawal leading-relaxed text-glow reveal-init-right stagger-1">
-                تجسيد للأناقة والجاذبية من SAMOU ROYALE. توليفات ساحرة من دهن العود العتيق، أندر نفحات الكهرمان والزهور النادرة التي تروي قصتك أينما حللت.
+                تجسيد للهيبة والوقار السعودي من دار سَمْو الملكية. توليفات ساحرة من دهن العود المعتق، نفائس الورد الطائفي، وأندر أطياب الكهرمان والعنبر لفوحان يدوم على الثوب والبشت.
               </p>
 
               <div class="pt-4 flex flex-wrap items-center gap-4 reveal-init-up stagger-2">
-                <a href="#/exclusive" class="px-8 py-3.5 rounded-xl bg-brand-gold hover:bg-brand-goldHover text-brand-dark font-cairo font-extrabold text-sm shadow-xl transition-all transform hover:-translate-y-1 hover:shadow-brand-gold/40">
-                  تسوق الآن
+                <a href="#exclusiveOffersSection" onclick="document.getElementById('exclusiveOffersSection')?.scrollIntoView({behavior: 'smooth'})" class="px-8 py-3.5 rounded-xl bg-brand-gold hover:bg-brand-goldHover text-brand-dark font-cairo font-extrabold text-sm shadow-xl transition-all transform hover:-translate-y-1 hover:shadow-brand-gold/40">
+                  تصفح عروض المملكة الحصرية 🇸🇦
                 </a>
                 <a href="#/reports" class="px-7 py-3.5 rounded-xl bg-white/15 hover:bg-white/25 text-white font-cairo font-bold text-sm backdrop-blur-md border border-brand-gold/40 transition-all flex items-center gap-2">
-                  <span>📊 تقارير الدار المباشرة</span>
+                  <span>📜 ميثاق الجودة واعتماد SFDA</span>
                 </a>
+              </div>
+
+              <div class="flex items-center gap-4 pt-2 text-xs text-white/70">
+                <span class="flex items-center gap-1.5"><span class="text-brand-gold">✓</span> شحن سريع للرياض، جدة، وكافة المدن</span>
+                <span class="flex items-center gap-1.5"><span class="text-brand-gold">✓</span> عينة تجربة مجانية مرفقة</span>
               </div>
 
             </div>
           </div>
         </section>
 
-        <!-- قسم الأكثر مبيعًا: عزل العرض خارج الشاشة بتقنية content-visibility ومحاذاة تفاعلية يمين ويسار -->
-        <section class="section-lazy-contain max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4">
-            <div class="reveal-init-right">
-              <span class="text-xs font-bold uppercase tracking-widest text-brand-gold font-cairo">مختارات النخبة</span>
-              <h2 class="text-3xl sm:text-4xl font-extrabold font-cairo text-brand-dark mt-1">الأكثر مبيعاً</h2>
+        <!-- قسم عروض حصرية وخصومات 25% بالمملكة العربية السعودية (يتحول إليه العميل تلقائياً عند كود الخصم) -->
+        <section id="exclusiveOffersSection" class="section-lazy-contain max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 scroll-mt-24">
+          <div class="relative bg-gradient-to-br from-[#0B1E18] via-[#0E2820] to-[#07130F] rounded-3xl p-6 sm:p-10 border-2 border-brand-gold/40 shadow-2xl overflow-hidden">
+            <div class="ambient-orb w-96 h-96 bg-brand-gold/15 -top-20 -right-20"></div>
+            <div class="ambient-orb w-96 h-96 bg-emerald-600/10 -bottom-20 -left-20"></div>
+
+            <div class="relative z-10 flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4 text-right">
+              <div>
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-brand-gold/20 border border-brand-gold/40 text-brand-gold text-xs font-bold font-cairo mb-2">
+                  <span>🔥</span>
+                  <span>عروض حصرية بالمملكة العربية السعودية · خصم 25% مع كود KSA25</span>
+                </div>
+                <h2 class="text-2xl sm:text-4xl font-extrabold font-cairo text-white text-glow">
+                  نفائس العطور المشمولة بـ <span class="text-brand-gold">عرض الـ 25% الحصري</span>
+                </h2>
+              </div>
+              <p class="text-xs sm:text-sm text-white/80 font-tajawal max-w-md">
+                إصدارات ملكية ونفائس عود ودهن معتق مشمولة بتخفيض الترحيب الخاص مع شحن فوري مجاني لكافة مدن المملكة.
+              </p>
             </div>
-            <p class="text-sm text-brand-secondary font-tajawal max-w-md reveal-init-left">
-              أيقونات عطرية استثنائية صُممت لتدوم وتبهر من حولك بنفحات ملكية آسرة.
+
+            <!-- كروت المنتجات المخفضة -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
+              ${PRODUCTS.discountedOffers.map((p, idx) => renderProductCard(p, idx)).join('')}
+            </div>
+          </div>
+        </section>
+
+        <!-- قسم الأكثر مبيعًا بالمملكة: عزل العرض خارج الشاشة بتقنية content-visibility ومحاذاة تفاعلية يمين ويسار -->
+        <section class="section-lazy-contain max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+          <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4">
+            <div class="reveal-init-right text-right">
+              <span class="text-xs font-bold uppercase tracking-widest text-brand-gold font-cairo">مختارات النخبة بالمملكة</span>
+              <h2 class="text-3xl sm:text-4xl font-extrabold font-cairo text-brand-dark mt-1">الأكثر طلباً في السعودية</h2>
+            </div>
+            <p class="text-sm text-brand-secondary font-tajawal max-w-md reveal-init-left text-right">
+              أيقونات عطرية ذات فوحان هائل وثبات يتجاوز 48 ساعة على الأقمشة والثياب الفاخرة.
             </p>
           </div>
 
@@ -1264,7 +1434,11 @@
     let uploadedReceiptDataUrl = null;
 
     function templateCart() {
-      const total = cart.reduce((sum, i) => sum + (i.price * i.quantity), 0);
+      const subtotal = cart.reduce((sum, i) => sum + (i.price * i.quantity), 0);
+      const isDiscountClaimed = localStorage.getItem('samou_discount_claimed') === 'true';
+      const discountPercent = isDiscountClaimed ? 25 : 0;
+      const discountAmount = Math.round(subtotal * (discountPercent / 100));
+      const total = subtotal - discountAmount;
 
       if (cart.length === 0) {
         return `
@@ -1549,8 +1723,17 @@
                 <div class="space-y-3 text-xs font-tajawal text-brand-secondary">
                   <div class="flex justify-between items-center">
                     <span>المجموع الفرعي:</span>
-                    <span class="font-bold text-brand-dark text-sm font-cairo">${total} ر.س</span>
+                    <span class="font-bold text-brand-dark text-sm font-cairo">${subtotal} ر.س</span>
                   </div>
+                  ${isDiscountClaimed ? `
+                    <div class="flex justify-between items-center text-emerald-800 bg-emerald-50 border border-emerald-200 p-2.5 rounded-xl font-bold font-cairo">
+                      <span class="flex items-center gap-1.5">
+                        <span>🏷️</span>
+                        <span>خصم الترحيب لعملاء المملكة (25% - KSA25):</span>
+                      </span>
+                      <span class="text-emerald-700 text-sm">-${discountAmount} ر.س</span>
+                    </div>
+                  ` : ''}
                   <div class="flex justify-between items-center">
                     <span>الشحن الملكي السريع (سمسا / أرامكس):</span>
                     <span class="font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">مجاني لكافة مدن المملكة</span>
@@ -1568,12 +1751,12 @@
                 <!-- كود الخصم -->
                 <div class="pt-2">
                   <div class="flex gap-2">
-                    <input type="text" id="voucherInput" placeholder="كود الخصم: ROYAL25" class="flex-1 p-2.5 rounded-xl border border-[#0A1B16]/15 text-xs text-brand-dark uppercase tracking-wider focus:outline-none focus:border-brand-gold">
+                    <input type="text" id="voucherInput" value="${isDiscountClaimed ? 'KSA25' : ''}" placeholder="كود الخصم: KSA25" class="flex-1 p-2.5 rounded-xl border border-[#0A1B16]/15 text-xs text-brand-dark uppercase tracking-wider focus:outline-none focus:border-brand-gold">
                     <button type="button" onclick="applyVoucher()" class="px-4 py-2.5 rounded-xl bg-brand-dark hover:bg-brand-gold hover:text-brand-dark text-white font-cairo text-xs font-bold transition-colors">
                       تطبيق
                     </button>
                   </div>
-                  <div id="voucherMsg" class="text-[11px] text-emerald-700 font-bold mt-1 hidden">✓ تم تفعيل كود الخصم الملكي بنجاح</div>
+                  <div id="voucherMsg" class="text-[11px] text-emerald-700 font-bold mt-1 ${isDiscountClaimed ? '' : 'hidden'}">✓ تم تفعيل كود الخصم الملكي 25% (KSA25) بنجاح</div>
                 </div>
 
                 <button 
@@ -1747,10 +1930,18 @@
     function applyVoucher() {
       const inp = document.getElementById('voucherInput');
       const msg = document.getElementById('voucherMsg');
-      if (inp && msg) {
-        if (inp.value.trim().length > 0) {
-          msg.classList.remove('hidden');
-          showToast('تم تطبيق كود الخصم الملكي ROYAL25 بنجاح');
+      if (inp) {
+        const val = inp.value.trim().toUpperCase();
+        if (val.length > 0) {
+          localStorage.setItem('samou_discount_claimed', 'true');
+          hideAll25PercentPromos();
+          if (msg) {
+            msg.textContent = '✓ تم تفعيل كود الخصم الملكي 25% (' + val + ') بنجاح';
+            msg.classList.remove('hidden');
+          }
+          renderCartPage();
+          showToast('🎉 تم تفعيل خصم 25% الملكي على كامل السلة!');
+          triggerSparkleBurst(window.innerWidth / 2, window.innerHeight / 2);
         }
       }
     }
@@ -2401,7 +2592,7 @@
         "رحلة عطريّة ملكية: اكتشف الفخامة المطلقة لدار سَمْو الملكية",
         "أندر نفحات العود المروكي والعنبر البلوري المعتق",
         "شحن ملكي مجاني مؤمّن وسريع لكافة مدن ومناطق المملكة",
-        "خصم استثنائي 25% مع كود ROYAL25 وشحن مجاني فوري",
+        "خصم استثنائي 25% لعملاء المملكة مع كود KSA25 وشحن مجاني فوري",
         "وسائل دفع سعودية فورية وآمنة: مدى، STC Pay، وتحويل الراجحي"
       ],
       '#/men': [
@@ -2430,7 +2621,7 @@
       ],
       '#/cart': [
         "حقيبة مقتنياتك الملكية جاهزة للتجهيز من مستودعاتنا بالرياض",
-        "استخدم كود الخصم ROYAL25 واحصل فوراً على خصم 25% ملكي",
+        "استخدم كود الخصم الحصري KSA25 واحصل فوراً على خصم 25% ملكي",
         "شحن سريع مجاني لجميع مناطق ومدن المملكة عبر سمسا وأرامكس",
         "دفع فوري آمن ومريح عبر مدى، Apple Pay، STC Pay، ومصرف الراجحي"
       ],
@@ -2635,10 +2826,38 @@
       });
     }
 
-    // ═════════════════ 8. عروض تطلع من الجنب والعداد التنازلي ═════════════════
+    // ═════════════════ 8. إدارة عروض وخصومات 25% الملكية بالمملكة ═════════════════
     let remainingSeconds = 14 * 60 + 59; // 14:59
 
+    function hideAll25PercentPromos() {
+      const topBar = document.getElementById('topSaudiPromoBar');
+      if (topBar) topBar.style.display = 'none';
+
+      const drawer = document.getElementById('sideFlashOffer');
+      if (drawer) drawer.style.display = 'none';
+
+      const pill = document.getElementById('sideOfferTriggerPill');
+      if (pill) pill.style.display = 'none';
+    }
+
+    function checkPromoSuppression() {
+      if (localStorage.getItem('samou_discount_claimed') === 'true') {
+        hideAll25PercentPromos();
+      } else if (localStorage.getItem('samou_topbar_dismissed') === 'true') {
+        const topBar = document.getElementById('topSaudiPromoBar');
+        if (topBar) topBar.style.display = 'none';
+      }
+    }
+
+    function dismissTopPromoBarPermanently() {
+      localStorage.setItem('samou_topbar_dismissed', 'true');
+      const topBar = document.getElementById('topSaudiPromoBar');
+      if (topBar) topBar.style.display = 'none';
+      showToast('تم إخفاء الشريط العلوي');
+    }
+
     function toggleSideFlashOffer(open) {
+      if (localStorage.getItem('samou_discount_claimed') === 'true') return;
       const drawer = document.getElementById('sideFlashOffer');
       const pill = document.getElementById('sideOfferTriggerPill');
       if (!drawer || !pill) return;
@@ -2652,7 +2871,7 @@
     }
 
     function copySideCoupon() {
-      const code = document.getElementById('sideCouponCode')?.textContent || 'ROYAL25';
+      const code = document.getElementById('sideCouponCode')?.textContent || 'KSA25';
       navigator.clipboard.writeText(code).then(() => {
         const btn = document.getElementById('copyCouponBtn');
         if (btn) {
@@ -2664,17 +2883,99 @@
             btn.classList.remove('bg-white', 'text-brand-dark');
           }, 2000);
         }
-        showToast('تم نسخ كود ROYAL25 بنجاح!');
+        showToast('تم نسخ كود KSA25 بنجاح!');
       });
     }
 
-    function applySideDiscountToCart() {
-      showToast('🎉 تم تفعيل خصم 25% الملكي على سلتك!');
+    // ═════════════════ نافذة الخصم الذكية المنبثقة (Smart Modal: بعد ثانيتين + تحرك بالتمرير) ═════════════════
+    let twoSecondsPassed = false;
+    let discountModalTriggered = false;
+
+    function showSaudiDiscountModal() {
+      const modal = document.getElementById('saudiDiscountModal');
+      if (!modal) return;
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      modal.classList.add('opacity-100', 'pointer-events-auto');
+      const inner = modal.querySelector('div');
+      if (inner) inner.classList.replace('scale-95', 'scale-100');
+    }
+
+    function dismissSaudiDiscountModal() {
+      localStorage.setItem('samou_discount_dismissed', 'true');
+      const modal = document.getElementById('saudiDiscountModal');
+      if (modal) {
+        modal.classList.replace('opacity-100', 'opacity-0');
+        modal.classList.replace('pointer-events-auto', 'pointer-events-none');
+      }
+      showToast('تم حفظ اختيارك، ولن تظهر النافذة مرة أخرى');
+    }
+
+    function claimSaudiDiscountAndNavigate() {
+      // 1. حفظ استخدام الكود نهائياً
+      localStorage.setItem('samou_discount_claimed', 'true');
+
+      // 2. نسخ الكود للحافظة
+      try { navigator.clipboard.writeText('KSA25'); } catch(e) {}
+
+      // 3. إغلاق النافذة
+      const modal = document.getElementById('saudiDiscountModal');
+      if (modal) {
+        modal.classList.replace('opacity-100', 'opacity-0');
+        modal.classList.replace('pointer-events-auto', 'pointer-events-none');
+      }
+
+      // 4. إخفاء عبارة وشارات عرض 25% نهائياً كما طلب العميل
+      hideAll25PercentPromos();
+
+      // 5. مؤثرات احتفالية وتوست
       triggerSparkleBurst(window.innerWidth / 2, window.innerHeight / 2);
-      toggleSideFlashOffer(false);
+      showToast('🎉 تم تفعيل خصم 25% (كود KSA25) بنجاح! تم توجيهك إلى العروض المشمولة بالخصم');
+
+      // 6. توجيه العميل فوراً إلى قسم العروض المشمولة بالخصم
+      if (window.location.hash !== '#/home' && window.location.hash !== '') {
+        window.location.hash = '#/home';
+        setTimeout(() => {
+          const target = document.getElementById('exclusiveOffersSection');
+          if (target) target.scrollIntoView({ behavior: 'smooth' });
+        }, 350);
+      } else {
+        const target = document.getElementById('exclusiveOffersSection');
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        } else {
+          window.location.hash = '#/exclusive';
+        }
+      }
+    }
+
+    function checkScrollAndTriggerDiscount() {
+      if (discountModalTriggered) return;
+      if (localStorage.getItem('samou_discount_claimed') === 'true') return;
+      if (localStorage.getItem('samou_discount_dismissed') === 'true') return;
+
+      // شرط العميل: بعد ما يعدي ثانيتين ويتحرك على الموقع وينزل تحت شوية (scrollY > 70)
+      if (twoSecondsPassed && window.scrollY > 70) {
+        discountModalTriggered = true;
+        showSaudiDiscountModal();
+      }
+    }
+
+    function initSaudiDiscountTrigger() {
+      // بعد ثانيتين يبدأ ترقب حركة التمرير
+      setTimeout(() => {
+        twoSecondsPassed = true;
+        checkScrollAndTriggerDiscount();
+      }, 2000);
+
+      window.addEventListener('scroll', checkScrollAndTriggerDiscount, { passive: true });
     }
 
     function initSideOfferTimer() {
+      if (localStorage.getItem('samou_discount_claimed') === 'true') {
+        hideAll25PercentPromos();
+        return;
+      }
+
       setInterval(() => {
         remainingSeconds--;
         if (remainingSeconds < 0) remainingSeconds = 15 * 60;
@@ -2686,27 +2987,39 @@
         if (t1) t1.textContent = text;
         if (t2) t2.textContent = text;
       }, 1000);
-
-      // ظهور تلقائي ذكي للعرض الجانبي بعد 2.8 ثانية
-      setTimeout(() => {
-        toggleSideFlashOffer(true);
-      }, 2800);
     }
 
     // ═════════════════ 9. إشعارات الشراء الحية المنبثقة من الجنب (Live Saudi Order Ticker) ═════════════════
     const RECENT_ORDERS = [
       { buyer: "أحمد بن منصور من الرياض", product: "عطر 'كهرُمان' الملكي", time: "منذ دقيقتين" },
-      { buyer: "نورة القحطاني من جدة", product: "صندوق النخبة الملكي (إصدار خاص مرقم)", time: "منذ 4 دقائق" },
-      { buyer: "سلطان المري من الخبر", product: "كسرات عود موروكي نخب أول سوبر", time: "منذ 6 دقائق" },
+      { buyer: "نورة القحطاني من جدة", product: "مخلط العرين الملكي (خصم 25%)", time: "منذ 4 دقائق" },
+      { buyer: "سلطان المري من الخبر", product: "نجد ليذر النسخة الخاصة", time: "منذ 5 دقائق" },
       { buyer: "فهد الدوسري من الدمام", product: "عطر سيفرين إمبيريال الرجالي", time: "منذ 8 دقائق" },
-      { buyer: "هند الغامدي من مكة المكرمة", product: "عطر روز نوبل المخملي النسائي", time: "منذ 11 دقيقة" },
-      { buyer: "عبدالعزيز العتيبي من الطائف", product: "طقم الضيافة والبخور الملكي", time: "منذ 14 دقيقة" },
-      { buyer: "سعد التميمي من بريدة والقصيم", product: "ثلاثية نوكتورن الذهبية", time: "منذ 17 دقيقة" }
+      { buyer: "سارة المطيري من مكة المكرمة", product: "سكب الورد الطائفي الفاخر", time: "منذ 10 دقائق" },
+      { buyer: "عبدالعزيز العتيبي من الطائف", product: "دهن عود تراد معتق 25 سنة", time: "منذ 12 دقيقة" },
+      { buyer: "محمد العمري من أبها وخميس مشيط", product: "طقم الضيافة والبخور الملكي", time: "منذ 15 دقيقة" },
+      { buyer: "سعد التميمي من بريدة والقصيم", product: "صندوق فخر المملكة للمناسبات", time: "منذ 18 دقيقة" }
     ];
     let orderTickerIdx = 0;
+    let liveOrderInterval = null;
+
+    function dismissLiveOrdersPermanently() {
+      localStorage.setItem('samou_orders_dismissed', 'true');
+      const toast = document.getElementById('liveOrderToast');
+      if (toast) toast.style.transform = 'translate3d(-125%, 0, 0)';
+      if (liveOrderInterval) clearInterval(liveOrderInterval);
+      showToast('تم إيقاف إشعارات الشراء بناءً على رغبتكم');
+    }
 
     function initLiveOrderTicker() {
-      setInterval(() => {
+      if (localStorage.getItem('samou_orders_dismissed') === 'true') return;
+
+      liveOrderInterval = setInterval(() => {
+        if (localStorage.getItem('samou_orders_dismissed') === 'true') {
+          clearInterval(liveOrderInterval);
+          return;
+        }
+
         const toast = document.getElementById('liveOrderToast');
         if (!toast) return;
 
@@ -2724,15 +3037,17 @@
         setTimeout(() => {
           toast.style.transform = 'translate3d(-125%, 0, 0)';
         }, 4500);
-      }, 13000);
+      }, 12000);
     }
 
     // ═════════════════ التشغيل المبدئي للأنظمة ═════════════════
+    checkPromoSuppression();
     initLuxuryCanvas();
     renderLuxuryCanvas();
     updateCartBadges();
     initCursorAura();
     initSideOfferTimer();
+    initSaudiDiscountTrigger();
     initLiveOrderTicker();
     if (!window.location.hash) window.location.hash = '#/home';
     navigate();

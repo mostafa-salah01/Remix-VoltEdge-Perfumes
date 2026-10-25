@@ -11,8 +11,11 @@ interface Product {
   id: number;
   name: string;
   price: number;
+  originalPrice?: number;
   rating: number;
   image: string;
+  demandBadge?: string;
+  stockAlert?: string;
 }
 
 type TabType = 'home' | 'mens' | 'womens' | 'oud' | 'exclusive' | 'checkout';
@@ -24,6 +27,12 @@ export default function App() {
   ]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [discountClaimed, setDiscountClaimed] = useState<boolean>(() => {
+    return typeof window !== 'undefined' && localStorage.getItem('samou_discount_claimed') === 'true';
+  });
+  const [showPromoBar, setShowPromoBar] = useState<boolean>(() => {
+    return typeof window !== 'undefined' && localStorage.getItem('samou_discount_claimed') !== 'true';
+  });
 
   // حالة الدفع في السعودية
   const [paymentMethod, setPaymentMethod] = useState<'mada' | 'stcpay' | 'rajhi' | 'tamara'>('mada');
@@ -38,11 +47,20 @@ export default function App() {
   });
 
   const cartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
-  const cartTotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const rawTotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const discountAmount = discountClaimed ? Math.round(rawTotal * 0.25) : 0;
+  const cartTotal = rawTotal - discountAmount;
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
     setTimeout(() => setToastMessage(null), 2500);
+  };
+
+  const claimDiscount = () => {
+    localStorage.setItem('samou_discount_claimed', 'true');
+    setDiscountClaimed(true);
+    setShowPromoBar(false);
+    showToast('🎉 تم تفعيل كود الخصم KSA25 (خصم 25%) بنجاح!');
   };
 
   const addToCart = (product: Product) => {
@@ -94,63 +112,63 @@ export default function App() {
     products: Product[];
   }> = {
     home: {
-      title: "رحلة عطريّة: اكتشف الفخامة المطلقة",
-      subtitle: "تجسيد للأناقة والجاذبية من SAMOU ROYALE",
-      cta: "تسوّق الآن",
+      title: "أصالة الملوك: عطور تليق بالمملكة العربية السعودية",
+      subtitle: "توليفات ساحرة من دهن العود المعتق، الورد الطائفي، والعنبر البلوري",
+      cta: "تسوّق عروض المملكة الحصرية 🇸🇦",
       heroImage: "images/hero-banner.jfif",
       products: [
-        { id: 1, name: "عطر 'كهرُمان' الملكي", price: 499, rating: 5.0, image: "images/prod-1.jfif" },
-        { id: 2, name: "كسرات عود فاخرة", price: 750, rating: 5.0, image: "images/prod-2.jfif" },
-        { id: 3, name: "عطر 'شرقي' للجنسين", price: 389, rating: 5.0, image: "images/prod-3.jfif" },
-        { id: 4, name: "مبخرة عصرية مع بخور", price: 599, rating: 4.6, image: "images/prod-4.jfif" },
+        { id: 1, name: "عطر 'كهرُمان' الملكي", price: 499, originalPrice: 665, rating: 5.0, image: "images/prod-1.jfif", demandBadge: "👑 الأكثر طلباً بالمملكة" },
+        { id: 2, name: "مخلط العرين الملكي", price: 510, originalPrice: 680, rating: 5.0, image: "images/prod-3.jfif", demandBadge: "🔥 خصم 25% حصري", stockAlert: "متبقي قطعتان فقط" },
+        { id: 3, name: "كسرات عود موروكي نخب أول", price: 750, originalPrice: 990, rating: 5.0, image: "images/prod-2.jfif", demandBadge: "💎 نخب أول معتمد SFDA" },
+        { id: 4, name: "سكب الورد الطائفي الفاخر", price: 420, originalPrice: 560, rating: 5.0, image: "images/prod-4.jfif", demandBadge: "🌸 عرائسي ملكي", stockAlert: "متبقي 3 فقط" },
       ]
     },
     mens: {
-      title: "تشكيلة العطور الرجالية: هيبة ونفوذ",
-      subtitle: "عطور خشبية وشرقية مخصصة للرجل العصري",
-      cta: "تسوّق الآن",
+      title: "تشكيلة العطور الرجالية: هيبة ووقار سعودي",
+      subtitle: "عطور خشبية فاخرة تدوم أكثر من 48 ساعة على الثوب والبشت",
+      cta: "تسوّق التشكيلة الرجالية",
       heroImage: "images/hero-mens.jfif",
       products: [
-        { id: 101, name: "عطر سـيفرين بلاك", price: 549, rating: 5.0, image: "images/prod-3.jfif" },
-        { id: 102, name: "عطر كهرُمان إنتنس", price: 620, rating: 4.9, image: "images/prod-1.jfif" },
-        { id: 103, name: "عطر إميرالد ليدر", price: 480, rating: 5.0, image: "images/prod-3.jfif" },
-        { id: 104, name: "عطر فانتوم وودز", price: 425, rating: 4.8, image: "images/prod-1.jfif" },
+        { id: 101, name: "نجد ليذر النسخة الخاصة", price: 465, originalPrice: 620, rating: 5.0, image: "images/prod-3.jfif", demandBadge: "🔥 الأكثر طلباً بالرياض" },
+        { id: 102, name: "عطر سيفرين إمبيريال", price: 549, rating: 5.0, image: "images/prod-3.jfif", demandBadge: "👑 فخامة المجالس" },
+        { id: 103, name: "عطر كهرُمان إنتنس", price: 620, rating: 4.9, image: "images/prod-1.jfif", demandBadge: "⚡ ثبات 48 ساعة" },
+        { id: 104, name: "عطر إميرالد ليدر", price: 480, rating: 5.0, image: "images/prod-3.jfif" },
       ]
     },
     womens: {
-      title: "عالم الأناقة النسائية: لمسات من السحر",
-      subtitle: "توليفات زهرية وسكرية ناعمة تأسر الحواس",
-      cta: "تسوّق الآن",
+      title: "عالم الأناقة النسائية: سحر الورد الطائفي والمسك",
+      subtitle: "توليفات زهرية ومخملية ناعمة تأسر الحواس في مناسبات المملكة",
+      cta: "تسوّق التشكيلة النسائية",
       heroImage: "images/hero-womens.jfif",
       products: [
-        { id: 201, name: "عطر روز نوبل", price: 460, rating: 5.0, image: "images/prod-1.jfif" },
-        { id: 202, name: "عطر فيلفيت أوركيد", price: 520, rating: 4.9, image: "images/prod-3.jfif" },
-        { id: 203, name: "عطر فانيلا دي لوميير", price: 390, rating: 5.0, image: "images/prod-1.jfif" },
-        { id: 204, name: "عطر بلانش مسك", price: 440, rating: 4.9, image: "images/prod-3.jfif" },
+        { id: 201, name: "سكب الورد الطائفي الفاخر", price: 420, originalPrice: 560, rating: 5.0, image: "images/prod-4.jfif", demandBadge: "🌸 عرائسي ملكي" },
+        { id: 202, name: "عطر روز نوبل المخملي", price: 460, rating: 5.0, image: "images/prod-1.jfif", demandBadge: "👑 رقة ملكية" },
+        { id: 203, name: "عطر فيلفيت أوركيد", price: 520, rating: 4.9, image: "images/prod-3.jfif" },
+        { id: 204, name: "عطر بلانش مسك النقي", price: 440, rating: 4.9, image: "images/prod-3.jfif", demandBadge: "⚡ فوحان بارد يدوم" },
       ]
     },
     oud: {
-      title: "أصالة العود والبخور: عبق التراث",
-      subtitle: "أجود أنواع العود الطبيعي والمباخر الذكية",
-      cta: "تسوّق الآن",
+      title: "أصالة العود والبخور: تراث الضيافة السعودية",
+      subtitle: "أجود كسرات الموروكي والكلمنتان وأدهان العود المعتقة لسنوات",
+      cta: "تسوّق نفائس العود",
       heroImage: "images/hero-oud.jfif",
       products: [
-        { id: 301, name: "كسرات عود موروكي", price: 750, rating: 5.0, image: "images/prod-2.jfif" },
-        { id: 302, name: "تولة دهن عود هندي", price: 890, rating: 5.0, image: "images/prod-1.jfif" },
-        { id: 303, name: "مبخرة عصرية مع بخور", price: 599, rating: 4.6, image: "images/prod-4.jfif" },
-        { id: 304, name: "مبخرة ذكية متنقلة", price: 680, rating: 4.9, image: "images/prod-4.jfif" },
+        { id: 301, name: "دهن عود تراد معتق 25 سنة", price: 735, originalPrice: 980, rating: 5.0, image: "images/prod-1.jfif", demandBadge: "👑 تعتيق سلطاني نادر" },
+        { id: 302, name: "بخور كلمنتان دبل سوبر بيور", price: 630, originalPrice: 840, rating: 5.0, image: "images/prod-2.jfif", demandBadge: "🔥 طلب استثنائي للضيافة" },
+        { id: 303, name: "كسرات عود موروكي نخب أول", price: 750, rating: 5.0, image: "images/prod-2.jfif", demandBadge: "💎 زبد كثيف طبيعي" },
+        { id: 304, name: "تولة دهن عود هندي معتق", price: 890, rating: 5.0, image: "images/prod-1.jfif" },
       ]
     },
     exclusive: {
-      title: "المجموعات الحصرية: إصدارات محدودة",
-      subtitle: "صناديق هدايا فاخرة تحتوي على أندر المزيجات العطرية",
-      cta: "تسوّق الآن",
+      title: "المجموعات الحصرية: إصدارات يوم التأسيس والمناسبات",
+      subtitle: "صناديق هدايا فاخرة تحتوي على أندر المزيجات العطرية المرقمة",
+      cta: "طلب الإصدارات الخاصة",
       heroImage: "images/hero-exclusive.jfif",
       products: [
-        { id: 401, name: "صندوق النخبة الملكي", price: 1450, rating: 5.0, image: "images/hero-exclusive.jfif" },
-        { id: 402, name: "ثلاثية نوكتورن الذهبية", price: 1150, rating: 5.0, image: "images/hero-banner.jfif" },
-        { id: 403, name: "طقم الضيافة والبخور", price: 920, rating: 4.9, image: "images/prod-4.jfif" },
-        { id: 404, name: "صندوق العروسين الفاخر", price: 1680, rating: 5.0, image: "images/hero-exclusive.jfif" },
+        { id: 401, name: "صندوق فخر المملكة للمناسبات", price: 1290, originalPrice: 1720, rating: 5.0, image: "images/hero-banner.jfif", demandBadge: "👑 إصدار يوم التأسيس 🇸🇦" },
+        { id: 402, name: "صندوق النخبة الملكي (Grand Coffret)", price: 1450, rating: 5.0, image: "images/hero-exclusive.jfif", demandBadge: "🔥 إصدار VIP" },
+        { id: 403, name: "ثلاثية نوكتورن الذهبية", price: 1150, rating: 5.0, image: "images/prod-3.jfif" },
+        { id: 404, name: "طقم الضيافة والبخور الملكي", price: 920, rating: 4.9, image: "images/prod-4.jfif", demandBadge: "💎 خيار المجالس السعودية" },
       ]
     }
   };
@@ -552,9 +570,28 @@ export default function App() {
 
             {cart.length > 0 && (
               <div className="pt-4 border-t border-[#E9F2ED] space-y-3">
-                <div className="flex justify-between font-bold text-base text-[#0D231C]">
-                  <span>الإجمالي:</span>
-                  <span>{cartTotal} ر.س</span>
+                <div className="space-y-1.5 text-xs text-gray-600">
+                  <div className="flex justify-between">
+                    <span>المجموع الفرعي:</span>
+                    <span>{rawTotal} ر.س</span>
+                  </div>
+                  {discountClaimed ? (
+                    <div className="flex justify-between text-emerald-700 font-bold bg-emerald-50 p-1.5 rounded">
+                      <span>خصم الترحيب (25% - KSA25):</span>
+                      <span>-{discountAmount} ر.س</span>
+                    </div>
+                  ) : (
+                    <button 
+                      onClick={claimDiscount}
+                      className="w-full text-center py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-800 text-[11px] font-bold rounded-lg border border-amber-200 transition-colors"
+                    >
+                      ✨ تفعيل كود الخصم KSA25 (خصم 25%)
+                    </button>
+                  )}
+                </div>
+                <div className="flex justify-between font-bold text-base text-[#0D231C] pt-2 border-t border-gray-100">
+                  <span>الإجمالي النهائي:</span>
+                  <span className="text-[#E5A855] text-lg">{cartTotal} ر.س</span>
                 </div>
                 <button 
                   onClick={() => {
