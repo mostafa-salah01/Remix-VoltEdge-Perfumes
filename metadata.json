@@ -1,0 +1,6 @@
+{
+  "name": "VoltEdge Perfumes - متجر فولت إيدج للعطور الفاخرة",
+  "description": "متجر VoltEdge للعطور الفاخرة والبخور والعود الملكي - رحلة عطرية تجسد الفخامة والأناقة المطلقة.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

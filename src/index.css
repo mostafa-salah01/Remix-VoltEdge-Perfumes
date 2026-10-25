@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-family: 'Tajawal', sans-serif;
+  }
+}
+
+.font-cairo {
+  font-family: 'Cairo', sans-serif;
+}
+
+.font-tajawal {
+  font-family: 'Tajawal', sans-serif;
+}
+
+.font-cinzel {
+  font-family: 'Cinzel', serif;
+}
+
+/* Glassmorphism luxury backdrop */
+.glass-luxury {
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.gold-gradient-text {
+  background: linear-gradient(135deg, #A8822A 0%, #D4AF37 50%, #8A6818 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إتمام الطلب والدفع | SAMOU ROYALE Perfumes</title>
+  
+  <!-- Google Fonts: Cairo & Tajawal & Cinzel -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Cinzel:wght@600;700;800&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  
+  <script>
+    // التوجيه التلقائي المباشر لتطبيق المتجر الموحد (سلة التسوق)
+    if (window.location.pathname.endsWith('checkout.html')) {
+      window.location.replace('index.html#/cart');
+    }
+  </script>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              bg: '#F4F8F5',
+              cream: '#E9F2ED',
+              dark: '#0A1B16',
+              gold: '#E5A855',
+              goldHover: '#D99B45',
+              muted: '#4A6B60',
+              border: '#D6E6DC',
+            }
+          },
+          fontFamily: {
+            tajawal: ['Tajawal', 'sans-serif'],
+            cairo: ['Cairo', 'sans-serif'],
+            cinzel: ['Cinzel', 'serif'],
+          },
+          boxShadow: {
+            'luxury': '0 10px 30px -5px rgba(10, 27, 22, 0.06), 0 20px 25px -5px rgba(229, 168, 85, 0.05)',
+            'luxury-hover': '0 20px 40px -10px rgba(10, 27, 22, 0.12), 0 10px 20px -5px rgba(229, 168, 85, 0.15)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+      font-family: 'Tajawal', sans-serif;
+      background-color: #F4F8F5;
+      color: #0A1B16;
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(232, 225, 213, 0.85);
+    }
+    .gold-gradient-text {
+      background: linear-gradient(135deg, #C98B3A 0%, #E5A855 50%, #9A621E 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #E9F2ED; }
+    ::-webkit-scrollbar-thumb { background: #E5A855; border-radius: 4px; }
+  </style>
+</head>
+<body class="bg-brand-bg text-brand-dark antialiased selection:bg-brand-gold/20 selection:text-brand-dark flex flex-col min-h-screen">
+
+  <!-- شريط التنقل العلوي (Navbar الموحد) -->
+  <header class="sticky top-0 z-40 bg-brand-bg/95 backdrop-blur-md border-b border-brand-border transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- الشعار -->
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="flex items-center gap-2 group">
+          <img src="images/logo.svg" alt="SAMOU ROYALE Logo" class="h-10 w-auto object-contain rounded" onerror="this.style.display='none'">
+          <span class="font-cinzel text-2xl md:text-3xl font-bold tracking-wider text-brand-dark group-hover:text-brand-gold transition-colors">
+            SAMOU ROYALE
+          </span>
+        </a>
+      </div>
+
+      <!-- روابط الأقسام -->
+      <nav class="hidden md:flex items-center gap-8 text-base font-medium font-cairo">
+        <a href="index.html" class="text-brand-dark/80 hover:text-brand-gold transition-colors py-1">الرئيسية</a>
+        <a href="mens-perfumes.html" class="text-brand-dark/80 hover:text-brand-gold transition-colors py-1">عطور رجالية</a>
+        <a href="womens-perfumes.html" class="text-brand-dark/80 hover:text-brand-gold transition-colors py-1">عطور نسائية</a>
+        <a href="oud-incense.html" class="text-brand-dark/80 hover:text-brand-gold transition-colors py-1">بذور وعود</a>
+        <a href="exclusive-collections.html" class="text-brand-dark/80 hover:text-brand-gold transition-colors py-1">مجموعات حصرية</a>
+      </nav>
+
+      <!-- زر السلة التفاعلي -->
+      <div class="flex items-center gap-4">
+        <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-cream border border-brand-border text-xs text-brand-dark font-semibold">
+          <span>سلة التسوق:</span>
+          <span id="navCartCount" class="text-brand-gold font-bold">1</span>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- الهيكل الرأسي المتمركز للترويسة (Centered Header) -->
+  <section class="pt-12 pb-8 bg-gradient-to-b from-brand-bg to-brand-cream/40 text-center">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 space-y-3">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-brand-border text-xs text-brand-muted">
+        <span class="w-1.5 h-1.5 rounded-full bg-brand-gold"></span>
+        <span>بوابة الدفع الآمن والتوثيق المباشر</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-brand-dark font-cairo">
+        سلة التسوق و<span class="gold-gradient-text">إتمام الطلب</span>
+      </h1>
+      <p class="text-sm sm:text-base text-brand-muted font-tajawal max-w-xl mx-auto">
+        راجِع طلبك الملكي وأدخل بيانات الشحن، ثم اختر وسيلة الدفع المناسبة وأرفق إيصال التحويل لإتمام الحجز فوراً.
+      </p>
+    </div>
+  </section>
+
+  <!-- محتوى إتمام الطلب الرئيسي: ملخص السلة + نموذج الشحن + خيارات الدفع وإيصال التحويل -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <!-- العمود الأيمن: نموذج بيانات الشحن وخيارات الدفع (7 أعمدة) -->
+      <div class="lg:col-span-7 space-y-6">
+        
+        <!-- 1. نموذج بيانات الشحن -->
+        <div class="glass-card p-6 sm:p-8 rounded-2xl shadow-luxury space-y-6">
+          <div class="flex items-center gap-3 border-b border-brand-border/80 pb-4">
+            <span class="w-8 h-8 rounded-full bg-brand-dark text-white flex items-center justify-center font-bold text-sm">1</span>
+            <h3 class="text-lg sm:text-xl font-bold font-cairo text-brand-dark">بيانات المستلم وعنوان التوصيل</h3>
+          </div>
+
+          <form id="checkoutForm" onsubmit="handleOrderSubmission(event)" class="space-y-4">
+            <div>
+              <label class="block text-xs font-bold text-brand-dark mb-1.5">الاسم ثلاثي *</label>
+              <input type="text" id="custName" required placeholder="مثال: عبد الرحمن محمد الشريف" class="w-full px-4 py-3 rounded-xl border border-brand-border bg-white text-sm focus:outline-none focus:border-brand-gold" />
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold text-brand-dark mb-1.5">رقم الجوال السعودي *</label>
+                <input type="tel" id="custPhone" required placeholder="05XXXXXXXX" pattern="^05[0-9]{8}$" class="w-full px-4 py-3 rounded-xl border border-brand-border bg-white text-sm focus:outline-none focus:border-brand-gold text-left dir-ltr" />
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-brand-dark mb-1.5">المدينة (المملكة العربية السعودية) *</label>
+                <select id="custCity" class="w-full px-4 py-3 rounded-xl border border-brand-border bg-white text-sm focus:outline-none focus:border-brand-gold">
+                  <option value="الرياض">الرياض</option>
+                  <option value="جدة">جدة</option>
+                  <option value="مكة المكرمة">مكة المكرمة</option>
+                  <option value="المدينة المنورة">المدينة المنورة</option>
+                  <option value="الدمام / الخبر">الدمام / الخبر</option>
+                  <option value="الأحساء">الأحساء</option>
+                  <option value="الطائف">الطائف</option>
+                  <option value="القصيم / بريدة">القصيم / بريدة</option>
+                  <option value="أبها / خميس مشيط">أبها / خميس مشيط</option>
+                  <option value="تبوك">تبوك</option>
+                  <option value="حائل">حائل</option>
+                  <option value="مدينة أخرى">مدينة أخرى بالمملكة</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-brand-dark mb-1.5">العنوان الوطني بالتفصيل (الحي، الشارع، رقم المبنى) *</label>
+              <input type="text" id="custAddress" required placeholder="مثال: حي النرجس، شارع أنس بن مالك، فيلا 24، الرياض" class="w-full px-4 py-3 rounded-xl border border-brand-border bg-white text-sm focus:outline-none focus:border-brand-gold" />
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-brand-dark mb-1.5">ملاحظات خاصة بالتوصيل أو التغليف (اختياري)</label>
+              <textarea id="custNotes" rows="2" placeholder="كتابة كارت إهداء، موعد مفضل للتسليم، إلخ..." class="w-full px-4 py-3 rounded-xl border border-brand-border bg-white text-sm focus:outline-none focus:border-brand-gold"></textarea>
+            </div>
+          </form>
+        </div>
+
+        <!-- 2. خيارات الدفع المعتمدة في المملكة العربية السعودية -->
+        <div class="glass-card p-6 sm:p-8 rounded-2xl shadow-luxury space-y-6">
+          <div class="flex items-center gap-3 border-b border-brand-border/80 pb-4">
+            <span class="w-8 h-8 rounded-full bg-brand-gold text-white flex items-center justify-center font-bold text-sm">2</span>
+            <h3 class="text-lg sm:text-xl font-bold font-cairo text-brand-dark">بوابات الدفع المعتمدة بالمملكة</h3>
+          </div>
+
+          <!-- أزرار اختيار وسيلة الدفع -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+            
+            <!-- مدى & Apple Pay -->
+            <label class="payment-option cursor-pointer p-4 rounded-xl border-2 border-brand-gold bg-brand-gold/5 flex flex-col justify-between transition-all">
+              <input type="radio" name="paymentMethod" value="mada" checked onchange="updatePaymentDetails('mada')" class="hidden" />
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded">Mada / Apple Pay</span>
+                <span class="w-3.5 h-3.5 rounded-full bg-brand-gold"></span>
+              </div>
+              <p class="text-xs font-bold text-brand-dark">مدى & أبل باي</p>
+              <p class="text-[11px] text-brand-muted">الدفع الفوري الآمن</p>
+            </label>
+
+            <!-- STC Pay -->
+            <label class="payment-option cursor-pointer p-4 rounded-xl border border-brand-border bg-white flex flex-col justify-between hover:border-brand-gold transition-all">
+              <input type="radio" name="paymentMethod" value="stcpay" onchange="updatePaymentDetails('stcpay')" class="hidden" />
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-purple-700 bg-purple-100 px-2 py-0.5 rounded">STC Pay</span>
+                <span class="w-3.5 h-3.5 rounded-full border border-gray-400"></span>
+              </div>
+              <p class="text-xs font-bold text-brand-dark">محفظة STC Pay</p>
+              <p class="text-[11px] text-brand-muted">تحويل فوري برقم الجوال</p>
+            </label>
+
+            <!-- مصرف الراجحي -->
+            <label class="payment-option cursor-pointer p-4 rounded-xl border border-brand-border bg-white flex flex-col justify-between hover:border-brand-gold transition-all">
+              <input type="radio" name="paymentMethod" value="rajhi" onchange="updatePaymentDetails('rajhi')" class="hidden" />
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-blue-800 bg-blue-100 px-2 py-0.5 rounded">Al Rajhi</span>
+                <span class="w-3.5 h-3.5 rounded-full border border-gray-400"></span>
+              </div>
+              <p class="text-xs font-bold text-brand-dark">مصرف الراجحي</p>
+              <p class="text-[11px] text-brand-muted">تحويل آيبان مباشر</p>
+            </label>
+
+            <!-- تمارا وتابي -->
+            <label class="payment-option cursor-pointer p-4 rounded-xl border border-brand-border bg-white flex flex-col justify-between hover:border-brand-gold transition-all">
+              <input type="radio" name="paymentMethod" value="tamara" onchange="updatePaymentDetails('tamara')" class="hidden" />
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-amber-800 bg-amber-100 px-2 py-0.5 rounded">Tamara / Tabby</span>
+                <span class="w-3.5 h-3.5 rounded-full border border-gray-400"></span>
+              </div>
+              <p class="text-xs font-bold text-brand-dark">تمارا أو تابي</p>
+              <p class="text-[11px] text-brand-muted">قسّم فاتورتك 4 دفعات</p>
+            </label>
+
+          </div>
+
+          <!-- تفاصيل الحساب المختار للتحويل -->
+          <div id="paymentInstructions" class="p-5 rounded-xl bg-brand-bg border border-brand-border space-y-2">
+            <!-- تتغير ديناميكياً بواسطة JavaScript -->
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-semibold text-brand-muted">بوابة مدى / Apple Pay:</span>
+              <span class="text-sm font-bold text-brand-dark select-all">بطاقات مدى، فيزا، ماستركارد</span>
+            </div>
+            <p class="text-xs text-brand-muted">
+              عملية دفع إلكترونية فورية ومشفرة 100% متوافقة مع معايير البنك المركزي السعودي (ساما).
+            </p>
+          </div>
+
+          <!-- 3. مكان مخصص لرفع صورة إيصال التحويل (Screenshot) -->
+          <div class="space-y-3">
+            <label class="block text-xs font-bold text-brand-dark">
+              إرفاق صورة إيصال التحويل (Screenshot) *
+            </label>
+            
+            <div 
+              id="uploadArea"
+              onclick="document.getElementById('receiptInput').click()"
+              class="border-2 border-dashed border-brand-border hover:border-brand-gold rounded-2xl p-6 text-center bg-white cursor-pointer transition-all hover:bg-brand-cream/20 relative"
+            >
+              <input 
+                type="file" 
+                id="receiptInput" 
+                accept="image/*" 
+                class="hidden" 
+                onchange="handleReceiptPreview(event)" 
+              />
+              
+              <div id="uploadPrompt" class="space-y-2">
+                <div class="w-12 h-12 rounded-full bg-brand-cream mx-auto flex items-center justify-center text-brand-gold">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/>
+                  </svg>
+                </div>
+                <p class="text-xs sm:text-sm font-bold text-brand-dark font-cairo">اضغط لرفع لقطة الشاشة أو اسحب الصورة هنا</p>
+                <p class="text-[11px] text-brand-muted">يدعم صور JPG, PNG, JFIF حتى 10 ميجابايت</p>
+              </div>
+
+              <!-- معاينة الإيصال المرفوع -->
+              <div id="receiptPreviewContainer" class="hidden flex items-center justify-center gap-4">
+                <img id="receiptPreviewImg" src="" alt="إيصال التحويل" class="h-24 w-auto rounded-lg border border-brand-border object-contain shadow-sm" />
+                <div class="text-right">
+                  <span class="inline-flex items-center gap-1 text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
+                    ✓ تم إرفاق الإيصال بنجاح
+                  </span>
+                  <p id="receiptFileName" class="text-xs text-brand-dark font-medium mt-1 truncate max-w-[200px]"></p>
+                  <button type="button" onclick="event.stopPropagation(); removeReceipt();" class="text-xs text-rose-600 hover:underline mt-1">تغيير الصورة</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- زر تأكيد الطلب المباشر -->
+          <button 
+            type="button" 
+            onclick="document.getElementById('checkoutForm').requestSubmit()"
+            class="w-full py-4 bg-brand-dark hover:bg-brand-gold text-white font-bold font-cairo text-base rounded-xl transition-all duration-300 shadow-luxury hover:shadow-luxury-hover flex items-center justify-center gap-2"
+          >
+            <span>تأكيد الطلب وشحن العطور</span>
+            <svg class="w-5 h-5 -scale-x-100" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
+            </svg>
+          </button>
+
+          <p class="text-[11px] text-center text-brand-muted">
+            بمجرد الضغط على تأكيد الطلب، سيتم مراجعة الإيصال وتجهيز شحنتكم فوراً مع رقم تتبع عبر رسالة SMS.
+          </p>
+
+        </div>
+
+      </div>
+
+      <!-- العمود الأيسر: ملخص السلة والمنتجات (5 أعمدة) -->
+      <div class="lg:col-span-5 space-y-6">
+        
+        <div class="glass-card p-6 sm:p-7 rounded-2xl shadow-luxury space-y-5 sticky top-28">
+          <div class="flex items-center justify-between border-b border-brand-border/80 pb-4">
+            <h3 class="text-lg font-bold font-cairo text-brand-dark">ملخص سلة الشراء</h3>
+            <span id="itemsSummaryCount" class="text-xs text-brand-muted">1 منتج</span>
+          </div>
+
+          <!-- قائمة عناصر السلة -->
+          <div id="cartItemsContainer" class="space-y-3.5 max-h-72 overflow-y-auto pr-1">
+            <!-- يمتلئ من السلة التفاعلية أو العينات الافتراضية -->
+          </div>
+
+          <!-- الحسابات الإجمالية -->
+          <div class="pt-4 border-t border-brand-border/80 space-y-2.5 text-xs text-brand-muted">
+            <div class="flex items-center justify-between">
+              <span>المجموع الفرعي:</span>
+              <span id="subtotalDisplay" class="font-bold text-brand-dark text-sm">499 ر.س</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span>الشحن والتوصيل الفاخر:</span>
+              <span class="text-emerald-700 font-bold">مجاني</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span>تغليف الهدايا الملكي:</span>
+              <span class="text-emerald-700 font-bold">مشمول مجاناً</span>
+            </div>
+            <div class="pt-3 border-t border-brand-border flex items-center justify-between text-base font-extrabold text-brand-dark font-cairo">
+              <span>الإجمالي النهائي المستحق:</span>
+              <span id="grandTotalDisplay" class="text-xl text-brand-gold font-bold">499 ر.س</span>
+            </div>
+          </div>
+
+          <!-- بطاقة الضمان الملكي -->
+          <div class="p-4 rounded-xl bg-brand-cream/60 border border-brand-border/80 space-y-2 text-xs">
+            <div class="flex items-center gap-2 font-bold text-brand-dark font-cairo">
+              <svg class="w-4 h-4 text-brand-gold shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z"/>
+              </svg>
+              <span>ضمان استرجاع ذهبي لمدة 14 يوماً</span>
+            </div>
+            <p class="text-brand-muted leading-relaxed">
+              إذا لم يطابق العطر ذوقكم، يمكنكم استرجاعه أو استبداله مجاناً وفق الشروط الذهبية لدار سَمْو الملكية.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- نافذة نجاح تأكيد الطلب (Success Order Modal) -->
+  <div id="successModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs hidden">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-8 shadow-2xl border border-brand-border text-center space-y-5 animate-in fade-in zoom-in-95 duration-200">
+      <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto text-2xl font-bold shadow-sm">
+        ✓
+      </div>
+      <div>
+        <h3 class="text-2xl font-bold font-cairo text-brand-dark">تم تأكيد طلبك بنجاح!</h3>
+        <p class="text-xs text-brand-gold font-bold mt-1 font-cinzel">VOLTEDGE ORDER CONFIRMED</p>
+      </div>
+
+      <div class="p-4 rounded-xl bg-brand-bg border border-brand-border text-right space-y-2 text-xs">
+        <div class="flex justify-between">
+          <span class="text-brand-muted">رقم الطلب:</span>
+          <span id="orderNumber" class="font-bold text-brand-dark font-mono">#VE-2026-9812</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-brand-muted">المستلم:</span>
+          <span id="orderCustName" class="font-bold text-brand-dark"></span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-brand-muted">الإجمالي المدفوع:</span>
+          <span id="orderGrandTotal" class="font-bold text-brand-gold text-sm"></span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-brand-muted">حالة التحويل:</span>
+          <span class="text-emerald-700 font-bold">جاري مطابقة الإيصال والشحن</span>
+        </div>
+      </div>
+
+      <p class="text-xs text-brand-muted leading-relaxed">
+        سيتصل بكم المندوب الملكي للتسليم خلال 24 إلى 48 ساعة. شكراً لاختياركم SAMOU ROYALE.
+      </p>
+
+      <div class="pt-2 flex gap-3">
+        <a href="index.html" class="flex-1 py-3 rounded-xl bg-brand-dark hover:bg-brand-gold text-white font-bold text-xs transition-colors">
+          العودة للرئيسية
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- الفوتر الموحد -->
+  <footer class="bg-brand-dark text-white mt-auto border-t border-brand-dark/80 pt-16 pb-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-white/10">
+        <div class="md:col-span-5 space-y-4">
+          <span class="font-cinzel text-3xl font-bold tracking-wider text-brand-gold">SAMOU ROYALE</span>
+          <p class="text-sm text-white/70 max-w-sm leading-relaxed">
+            دار العطور والبخور الراقية. نبتكر عطراً ليس مجرد رائحة، بل هوية ملكية وانطباع يدوم.
+          </p>
+        </div>
+        <div class="md:col-span-3 space-y-3 font-cairo">
+          <h5 class="text-base font-bold text-brand-gold">أقسام المتجر</h5>
+          <ul class="space-y-2 text-sm text-white/70">
+            <li><a href="mens-perfumes.html" class="hover:text-brand-gold transition-colors">عطور رجالية</a></li>
+            <li><a href="womens-perfumes.html" class="hover:text-brand-gold transition-colors">عطور نسائية</a></li>
+            <li><a href="oud-incense.html" class="hover:text-brand-gold transition-colors">بذور وعود</a></li>
+            <li><a href="exclusive-collections.html" class="hover:text-brand-gold transition-colors">مجموعات حصرية</a></li>
+          </ul>
+        </div>
+        <div class="md:col-span-4 space-y-3 font-cairo">
+          <h5 class="text-base font-bold text-brand-gold">خدمة العملاء والضمان</h5>
+          <p class="text-sm text-white/70">الدفع متاح نقداً عند الاستلام، فودافون كاش، وإنستاباي.</p>
+          <p class="text-xs text-white/50 pt-2">رقم خدمة العملاء للدعم الفوري: 01000000000</p>
+        </div>
+      </div>
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-white/50 gap-4">
+        <p>© 2026 SAMOU ROYALE Perfumes. جميع الحقوق محفوظة.</p>
+        <p class="font-cinzel tracking-wider text-brand-gold/70">SECURE LUXURY CHECKOUT</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- سكريبت إدارة سلة الشراء والدفع ورفع الإيصال -->
+  <script>
+    // تحميل أو تهيئة السلة
+    let cart = JSON.parse(localStorage.getItem('samou_royale_cart') || '[]');
+    if (cart.length === 0) {
+      // عينة أولية لتجربة الصفحة مباشرة
+      cart = [
+        { id: 1, name: "عطر 'كهرُمان' الملكي", price: 499, image: "images/prod-1.jfif", quantity: 1 }
+      ];
+      localStorage.setItem('samou_royale_cart', JSON.stringify(cart));
+    }
+
+    let hasUploadedReceipt = false;
+
+    function renderCartItems() {
+      const container = document.getElementById('cartItemsContainer');
+      const navCount = document.getElementById('navCartCount');
+      const itemsSummaryCount = document.getElementById('itemsSummaryCount');
+      const subtotalDisplay = document.getElementById('subtotalDisplay');
+      const grandTotalDisplay = document.getElementById('grandTotalDisplay');
+
+      const totalItems = cart.reduce((sum, i) => sum + i.quantity, 0);
+      const totalPrice = cart.reduce((sum, i) => sum + (i.price * i.quantity), 0);
+
+      if (navCount) navCount.textContent = totalItems;
+      if (itemsSummaryCount) itemsSummaryCount.textContent = totalItems + ' منتجات';
+      if (subtotalDisplay) subtotalDisplay.textContent = totalPrice + ' ر.س';
+      if (grandTotalDisplay) grandTotalDisplay.textContent = totalPrice + ' ر.س';
+
+      if (!container) return;
+
+      if (cart.length === 0) {
+        container.innerHTML = '<p class="text-xs text-center text-brand-muted py-8">السلة فارغة حالياً. <a href="index.html" class="text-brand-gold underline font-bold">تسوق الآن</a></p>';
+        return;
+      }
+
+      container.innerHTML = cart.map(item => `
+        <div class="flex items-center gap-3 p-3 rounded-xl bg-brand-bg/70 border border-brand-border">
+          <img src="${item.image}" alt="${item.name}" class="w-14 h-14 object-cover rounded-lg bg-white border border-brand-border" onerror="this.src='images/prod-1.jfif'" />
+          <div class="flex-1 min-w-0">
+            <h4 class="text-xs font-bold text-brand-dark font-cairo truncate">${item.name}</h4>
+            <p class="text-xs text-brand-gold font-bold mt-0.5">${item.price} ر.س</p>
+            <div class="flex items-center gap-2 mt-1.5">
+              <button onclick="updateQty(${item.id}, -1)" class="w-5 h-5 rounded bg-white border border-brand-border text-xs flex items-center justify-center font-bold">-</button>
+              <span class="text-xs font-semibold">${item.quantity}</span>
+              <button onclick="updateQty(${item.id}, 1)" class="w-5 h-5 rounded bg-white border border-brand-border text-xs flex items-center justify-center font-bold">+</button>
+            </div>
+          </div>
+          <button onclick="removeItem(${item.id})" class="text-brand-muted hover:text-rose-600 text-xs p-1" title="حذف">✕</button>
+        </div>
+      `).join('');
+    }
+
+    function updateQty(id, delta) {
+      const item = cart.find(i => i.id === id);
+      if (!item) return;
+      item.quantity += delta;
+      if (item.quantity <= 0) {
+        cart = cart.filter(i => i.id !== id);
+      }
+      localStorage.setItem('samou_royale_cart', JSON.stringify(cart));
+      renderCartItems();
+    }
+
+    function removeItem(id) {
+      cart = cart.filter(i => i.id !== id);
+      localStorage.setItem('samou_royale_cart', JSON.stringify(cart));
+      renderCartItems();
+    }
+
+    // تحديث بيانات وسيلة الدفع
+    function updatePaymentDetails(method) {
+      const instructions = document.getElementById('paymentInstructions');
+      const options = document.querySelectorAll('.payment-option');
+      options.forEach(opt => {
+        opt.classList.remove('border-brand-gold', 'bg-brand-gold/5');
+        opt.classList.add('border-brand-border', 'bg-white');
+      });
+
+      const selectedOpt = event ? event.target.closest('.payment-option') : options[0];
+      if (selectedOpt) {
+        selectedOpt.classList.remove('border-brand-border', 'bg-white');
+        selectedOpt.classList.add('border-brand-gold', 'bg-brand-gold/5');
+      }
+
+      if (method === 'mada') {
+        instructions.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold text-brand-muted">بوابة مدى / Apple Pay:</span>
+            <span class="text-sm font-bold text-emerald-800 font-mono select-all">بطاقات مدى، فيزا، ماستركارد</span>
+          </div>
+          <p class="text-xs text-brand-muted">
+            بوابة دفع معتمدة عبر البنك المركزي السعودي (ساما) - الدفع الفوري الآمن.
+          </p>
+        `;
+      } else if (method === 'stcpay') {
+        instructions.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold text-brand-muted">رقم محفظة STC Pay الرسمية:</span>
+            <span class="text-sm font-bold text-purple-800 font-mono dir-ltr select-all">050 987 6543</span>
+          </div>
+          <p class="text-xs text-brand-muted">
+            قم بالتحويل عبر تطبيق STC Pay إلى الرقم الموحد، ثم أرفق إشعار الحوالة بالأسفل.
+          </p>
+        `;
+      } else if (method === 'rajhi') {
+        instructions.innerHTML = `
+          <div class="flex flex-col gap-1 text-xs">
+            <div class="flex justify-between">
+              <span class="text-brand-muted">اسم المصرف:</span>
+              <span class="font-bold text-brand-dark">مصرف الراجحي (المملكة العربية السعودية)</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-brand-muted">الآيبان الدولي (IBAN):</span>
+              <span class="font-bold font-mono dir-ltr select-all text-blue-900">SA44 8000 0123 6080 1012 3456</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-brand-muted">اسم الحساب:</span>
+              <span class="font-bold text-brand-dark">مؤسسة دار سَمْو للعطور الفاخرة</span>
+            </div>
+          </div>
+          <p class="text-xs text-brand-muted mt-1">
+            يرجى إرفاق إشعار التحويل البنكي المباشر لإصدار وثيقة الشحن الفوري عبر سمسا أو أرامكس.
+          </p>
+        `;
+      } else if (method === 'tamara') {
+        instructions.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold text-brand-muted">خدمة تمارا / تابي:</span>
+            <span class="text-sm font-bold text-amber-900 select-all">قسم فاتورتك على 4 دفعات بدون فوائد</span>
+          </div>
+          <p class="text-xs text-brand-muted">
+            سيتم نقلك لربط حساب تمارا أو تابي المعتمد وإتمام الموافقة الفورية خلال 30 ثانية.
+          </p>
+        `;
+      }
+    }
+
+    // معاينة إيصال التحويل
+    function handleReceiptPreview(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        document.getElementById('receiptPreviewImg').src = evt.target.result;
+        document.getElementById('receiptFileName').textContent = file.name;
+        document.getElementById('uploadPrompt').classList.add('hidden');
+        document.getElementById('receiptPreviewContainer').classList.remove('hidden');
+        hasUploadedReceipt = true;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function removeReceipt() {
+      document.getElementById('receiptInput').value = '';
+      document.getElementById('receiptPreviewImg').src = '';
+      document.getElementById('uploadPrompt').classList.remove('hidden');
+      document.getElementById('receiptPreviewContainer').classList.add('hidden');
+      hasUploadedReceipt = false;
+    }
+
+    // إتمام الطلب
+    function handleOrderSubmission(e) {
+      e.preventDefault();
+      
+      if (!hasUploadedReceipt) {
+        alert('تنبيه: يُرجى إرفاق صورة إيصال التحويل (Screenshot) لتأكيد حجز العطور الملكية.');
+        document.getElementById('uploadArea').scrollIntoView({ behavior: 'smooth' });
+        return;
+      }
+
+      const name = document.getElementById('custName').value;
+      const total = cart.reduce((sum, i) => sum + (i.price * i.quantity), 0);
+      const randomOrder = '#VE-' + Math.floor(100000 + Math.random() * 900000);
+
+      document.getElementById('orderNumber').textContent = randomOrder;
+      document.getElementById('orderCustName').textContent = name;
+      document.getElementById('orderGrandTotal').textContent = total + ' ر.س';
+
+      document.getElementById('successModal').classList.remove('hidden');
+      
+      // تفريغ السلة بعد التأكيد
+      localStorage.removeItem('samou_royale_cart');
+      cart = [];
+    }
+
+    renderCartItems();
+  </script>
+</body>
+</html>

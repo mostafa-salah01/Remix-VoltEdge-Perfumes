@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAMOU ROYALE | عالم الأناقة النسائية</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Cinzel:wght@600;700;800&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  
+  <script>
+    if (window.location.pathname.endsWith('womens-perfumes.html')) {
+      window.location.replace('index.html#/women');
+    }
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    html, body {
+      font-family: 'Tajawal', sans-serif;
+      background-color: #E9F2ED;
+      color: #0D231C;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+    .product-card {
+      background: #FFFFFF;
+      border: 1px solid #E3EDE7;
+      border-radius: 1rem;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 30px -10px rgba(13, 35, 28, 0.1);
+    }
+  </style>
+</head>
+<body class="bg-[#E9F2ED] text-[#0D231C] flex flex-col justify-between min-h-screen selection:bg-[#E5A855]/30 selection:text-[#0D231C]">
+
+  <!-- Navbar -->
+  <header class="w-full bg-[#E9F2ED] pt-6 pb-4 px-8 md:px-16 transition-all">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <a href="index.html" class="text-left font-['Cinzel',serif] text-2xl md:text-3xl font-bold tracking-wider text-[#0D231C]">
+        SAMOU ROYALE
+      </a>
+      <nav class="flex items-center gap-6 sm:gap-10 text-sm sm:text-base font-semibold font-['Cairo',sans-serif] text-[#0D231C]">
+        <a href="index.html" class="pb-1 opacity-80 hover:opacity-100 transition-opacity">الرئيسية</a>
+        <a href="mens-perfumes.html" class="pb-1 opacity-80 hover:opacity-100 transition-opacity">عطور رجالية</a>
+        <a href="womens-perfumes.html" class="pb-1 border-b-2 border-[#0D231C] font-bold text-[#081511]">عطور نسائية</a>
+        <a href="oud-incense.html" class="pb-1 opacity-80 hover:opacity-100 transition-opacity">بذور وعود</a>
+        <a href="exclusive-collections.html" class="pb-1 opacity-80 hover:opacity-100 transition-opacity">مجموعات حصرية</a>
+        <a href="checkout.html" class="relative p-1 text-[#0D231C] hover:text-[#E5A855]">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119.993z" /></svg>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Hero & Products matching 1.jfif -->
+  <main class="flex-1 w-full flex flex-col justify-center items-center px-4 sm:px-8 py-4 relative">
+    <div class="w-full max-w-7xl mx-auto flex flex-col items-center">
+      
+      <!-- النص وفوق الصورة تماماً -->
+      <div class="text-center space-y-2 mb-2 z-20">
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#0D231C] font-['Cairo',sans-serif] tracking-tight">
+          عالم الأناقة النسائية: لمسات من السحر
+        </h1>
+        <p class="text-base sm:text-lg text-[#1C4336] font-['Tajawal',sans-serif] font-medium">
+          توليفات زهرية وسكرية ناعمة تأسر الحواس
+        </p>
+        <div class="pt-2">
+          <a href="#products-row" class="inline-block px-8 py-2.5 rounded-lg bg-[#13382D] hover:bg-[#0E2820] text-white text-sm sm:text-base font-bold font-['Cairo',sans-serif] shadow-md">
+            تسوّق الآن
+          </a>
+        </div>
+      </div>
+
+      <!-- الصورة تتوسط أسفل الزر وخلف الكروت -->
+      <div class="w-full flex justify-center -mt-6 sm:-mt-8 z-0 pointer-events-none">
+        <img src="images/hero-womens.jfif" alt="العطور النسائية" class="max-h-60 sm:max-h-72 md:max-h-84 object-contain mix-blend-multiply opacity-95" />
+      </div>
+
+      <!-- كروت المنتجات الـ 4 -->
+      <div id="products-row" class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mt-2 z-10">
+        <div class="product-card p-4 shadow-sm flex flex-col justify-between cursor-pointer" onclick="addToCart(201, 'عطر روز نوبل', 460, 'images/prod-1.jfif')">
+          <div class="w-full aspect-square flex items-center justify-center p-3 mb-2 bg-white rounded-xl">
+            <img src="images/prod-1.jfif" alt="عطر روز نوبل" class="max-h-40 max-w-full object-contain mix-blend-multiply" />
+          </div>
+          <div class="text-center px-1">
+            <h3 class="text-sm sm:text-base font-bold text-[#081511] font-['Cairo',sans-serif] truncate">عطر روز نوبل</h3>
+          </div>
+          <div class="mt-4 pt-2 border-t border-[#EBF3ED] flex items-center justify-between text-xs sm:text-sm font-semibold text-[#4A382E]">
+            <div class="flex items-center gap-1 text-amber-500 font-bold"><span>★</span><span>5.0</span></div>
+            <div class="font-bold text-[#0D231C] font-['Cairo']"><span>460</span> <span class="text-xs">ر.س</span></div>
+          </div>
+        </div>
+
+        <div class="product-card p-4 shadow-sm flex flex-col justify-between cursor-pointer" onclick="addToCart(202, 'عطر فيلفيت أوركيد', 520, 'images/prod-3.jfif')">
+          <div class="w-full aspect-square flex items-center justify-center p-3 mb-2 bg-white rounded-xl">
+            <img src="images/prod-3.jfif" alt="عطر فيلفيت أوركيد" class="max-h-40 max-w-full object-contain mix-blend-multiply" />
+          </div>
+          <div class="text-center px-1">
+            <h3 class="text-sm sm:text-base font-bold text-[#081511] font-['Cairo',sans-serif] truncate">عطر فيلفيت أوركيد</h3>
+          </div>
+          <div class="mt-4 pt-2 border-t border-[#EBF3ED] flex items-center justify-between text-xs sm:text-sm font-semibold text-[#4A382E]">
+            <div class="flex items-center gap-1 text-amber-500 font-bold"><span>★</span><span>4.9</span></div>
+            <div class="font-bold text-[#0D231C] font-['Cairo']"><span>520</span> <span class="text-xs">ر.س</span></div>
+          </div>
+        </div>
+
+        <div class="product-card p-4 shadow-sm flex flex-col justify-between cursor-pointer" onclick="addToCart(203, 'عطر فانيلا دي لوميير', 390, 'images/prod-1.jfif')">
+          <div class="w-full aspect-square flex items-center justify-center p-3 mb-2 bg-white rounded-xl">
+            <img src="images/prod-1.jfif" alt="عطر فانيلا دي لوميير" class="max-h-40 max-w-full object-contain mix-blend-multiply" />
+          </div>
+          <div class="text-center px-1">
+            <h3 class="text-sm sm:text-base font-bold text-[#081511] font-['Cairo',sans-serif] truncate">عطر فانيلا دي لوميير</h3>
+          </div>
+          <div class="mt-4 pt-2 border-t border-[#EBF3ED] flex items-center justify-between text-xs sm:text-sm font-semibold text-[#4A382E]">
+            <div class="flex items-center gap-1 text-amber-500 font-bold"><span>★</span><span>5.0</span></div>
+            <div class="font-bold text-[#0D231C] font-['Cairo']"><span>390</span> <span class="text-xs">ر.س</span></div>
+          </div>
+        </div>
+
+        <div class="product-card p-4 shadow-sm flex flex-col justify-between cursor-pointer" onclick="addToCart(204, 'عطر بلانش مسك', 440, 'images/prod-3.jfif')">
+          <div class="w-full aspect-square flex items-center justify-center p-3 mb-2 bg-white rounded-xl">
+            <img src="images/prod-3.jfif" alt="عطر بلانش مسك" class="max-h-40 max-w-full object-contain mix-blend-multiply" />
+          </div>
+          <div class="text-center px-1">
+            <h3 class="text-sm sm:text-base font-bold text-[#081511] font-['Cairo',sans-serif] truncate">عطر بلانش مسك</h3>
+          </div>
+          <div class="mt-4 pt-2 border-t border-[#EBF3ED] flex items-center justify-between text-xs sm:text-sm font-semibold text-[#4A382E]">
+            <div class="flex items-center gap-1 text-amber-500 font-bold"><span>★</span><span>4.9</span></div>
+            <div class="font-bold text-[#0D231C] font-['Cairo']"><span>440</span> <span class="text-xs">ر.س</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="w-full bg-[#E9F2ED] py-6 px-8 md:px-16 border-t border-[#CFE0D7] transition-all">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="font-['Cinzel',serif] text-xl sm:text-2xl font-bold tracking-wider text-[#0D231C]">SAMOU ROYALE</div>
+      <div class="hidden sm:block font-['Cinzel',serif] text-xl sm:text-2xl font-bold tracking-wider text-[#0D231C]">SAMOU ROYALE</div>
+      <div class="flex items-center gap-2 text-[#0D231C] opacity-75">
+        <div class="flex items-center">
+          <span class="w-4 h-4 rounded-full border border-[#0D231C] inline-block -mr-1.5"></span>
+          <span class="w-4 h-4 rounded-full border border-[#0D231C] inline-block"></span>
+        </div>
+        <svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2" /><path d="M2 10h20" /></svg>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function addToCart(id, name, price, image) {
+      let cart = JSON.parse(localStorage.getItem('samou_royale_cart') || '[]');
+      const item = cart.find(i => i.id === id);
+      if (item) item.quantity += 1;
+      else cart.push({ id, name, price, image, quantity: 1 });
+      localStorage.setItem('samou_royale_cart', JSON.stringify(cart));
+      alert('تمت إضافة "' + name + '" إلى سلة المشتريات!');
+    }
+  </script>
+</body>
+</html>
